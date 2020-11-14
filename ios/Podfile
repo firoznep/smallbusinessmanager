@@ -10,6 +10,8 @@ target 'smallbusinessmanager' do
 
   pod 'vasern', :path => '../node_modules/vasern'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'smallbusinessmanagerTests' do
     inherit! :complete
     # Pods for testing

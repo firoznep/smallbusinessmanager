@@ -1,4 +1,6 @@
-export const addItem = (item) => ({
-  type: ADD_ITEM,
-  payload: item,
+import {ADD_PRODUCT} from '../actiontypeConst/actionTypeConst';
+
+export const addProduct = (product) => ({
+  type: ADD_PRODUCT,
+  payload: product,
 });
