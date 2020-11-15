@@ -67,9 +67,10 @@ function HomeScreen({setProductReducer}) {
 }
 
 function SettingsScreen() {
-  const [pickedDateTime, setPickedDateTime] = useState();
+  const [pickedDateTime, setPickedDateTime] = useState(
+    new Date().toDateString(),
+  );
 
-  console.log(pickedDateTime);
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text>Settings!</Text>
@@ -87,21 +88,20 @@ const Tab = createBottomTabNavigator();
 
 function App({productReducer, setProductReducer}) {
   useEffect(() => {
-    // Products.onLoaded(() => setProductData(Products.data()));
-    Products.onLoaded(() => setProductReducer(Products.data()));
+    Products.onLoaded(() =>
+      setProductReducer(Products.filter({completed: true}).data()),
+    );
 
-    // /**
-    //  * onChange is used to perform actions whenever DB is changed or updated.
-    //  */
     // Products.onChange(() => setProductReducer(Products.data()));
 
     SplashScreen.hide();
   }, []);
 
-  console.log(productReducer);
+  // console.log(productReducer);
   return (
     <NavigationContainer>
       <Tab.Navigator
+        initialRouteName="Home"
         tabBarOptions={{
           activeTintColor: 'tomato',
           inactiveTintColor: 'gray',

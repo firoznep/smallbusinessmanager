@@ -6,7 +6,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {colors} from '../../colors/colors';
 import {styles} from '../../styles/styles';
 
-const BasicButton = ({
+const ButtonWithIcon = ({
   title,
   iconName,
   iconColor = colors.fbBlue,
@@ -20,10 +20,10 @@ const BasicButton = ({
       onPress={onPress}>
       <FontAwesome5 name={iconName} size={24} color={iconColor} />
       <Text style={[styles.btnText, {marginLeft: iconName ? 5 : 0}]}>
-        {title}
+        {title.toLocaleString('en-US')}
       </Text>
     </TouchableOpacity>
   );
 };
 
-export default BasicButton;
+export default ButtonWithIcon;

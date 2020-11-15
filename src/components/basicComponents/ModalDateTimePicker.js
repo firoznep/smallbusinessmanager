@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import {View} from 'react-native';
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {styles} from '../../styles/styles';
 
 import BasicButton from './BasicButton';
 
-const ModalDateTimePicker = ({pickedDateTime, title = new Date()}) => {
+const ModalDateTimePicker = ({
+  pickedDateTime,
+  title = new Date().toDateString('en-US'),
+}) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
