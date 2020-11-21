@@ -18,6 +18,8 @@ import RenderItem from '../../components/functionalComponents/RenderItem';
 import {Products} from '../../database';
 import {styles} from '../../styles/styles';
 
+import _ from 'lodash';
+
 const VIEWABILITY_CONFIG = {
   minimumViewTime: 300,
   viewAreaCoveragePercentThreshold: 100,
@@ -25,7 +27,14 @@ const VIEWABILITY_CONFIG = {
 };
 
 const ProductDetail = ({navigation}) => {
+  const allProductData = useSelector((state) =>
+    _.reverse([...state.productReducer.allProducts.data()]),
+  );
+
   const [refreshing, setRefreshing] = useState(false);
+  // const [allProductData, setAllProductData] = useState(
+  //   _.reverse([...productsSelector]),
+  // );
 
   const flatListRef = useRef();
 
@@ -34,10 +43,7 @@ const ProductDetail = ({navigation}) => {
     flatListRef.current.scrollToOffset({animated: true, offset: 0});
   };
 
-  const allProductData = useSelector((state) =>
-    state.productReducer.allProducts.data(),
-  );
-
+  // console.log(allProductData);
   useEffect(() => {
     // Products.onLoaded(() =>
     //   setProductReducer(Products.filter({completed: true}).data()),
@@ -51,8 +57,20 @@ const ProductDetail = ({navigation}) => {
 
     setTimeout(() => {
       setRefreshing(false);
-    }, 2000);
-  }, []);
+    }, 1000);
+  });
+
+  const updateItem = () => {
+    let upd = {
+      date: new Date(),
+      name: 'eight',
+      color: 'red',
+      note: 'Testing by inserting an item',
+      is_completed: 'true',
+    };
+    alert('item updated');
+    return upd;
+  };
 
   const renderItem = ({item}) => (
     <RenderItem
@@ -61,6 +79,10 @@ const ProductDetail = ({navigation}) => {
         let id = Products.get({id: item.id});
         Products.remove(id);
         alert('Deleted');
+      }}
+      handleUpdate={() => {
+        let item1 = Products.get({id: item.id});
+        Products.update(item1.id, updateItem());
       }}
     />
   );
@@ -94,7 +116,7 @@ const ProductDetail = ({navigation}) => {
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={ItemSeparatorComponent}
         // getItemLayout={getItemLayout}
-        initialNumToRender={4}
+        initialNumToRender={7}
         removeClippedSubviews={true}
         viewabilityConfig={VIEWABILITY_CONFIG}
         refreshControl={

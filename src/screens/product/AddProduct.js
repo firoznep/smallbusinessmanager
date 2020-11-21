@@ -9,14 +9,27 @@ const AddProduct = () => {
   const adPr = () => {
     Products.insert({
       date: new Date(),
-      name: 'Test',
+      name: 'sixth',
       color: 'blue',
       note: 'Testing by inserting an item',
-      is_completed: 'false',
+      is_completed: 'true',
     })[0];
 
-    // alert('done');
-    console.log(Products.data().length);
+    alert('item added');
+  };
+
+  const dltAllPro = () => {
+    Products.perform(function (db) {
+      // Remove all completed items
+      // and update incompleted item to completed
+      Products.data().forEach(function (item) {
+        db.remove(item);
+        // if (item.completed) {
+        // } else {
+        //     db.update(item, { completed: true })
+        // }
+      });
+    });
   };
 
   return (
@@ -29,7 +42,20 @@ const AddProduct = () => {
         }}>
         <Text>Add Product</Text>
 
-        <BasicButton title="add" onPress={() => adPr()} />
+        <BasicButton
+          title="add"
+          onPress={() => {
+            adPr();
+            alert('item added');
+          }}
+        />
+        <BasicButton
+          title="Delete all Product"
+          onPress={() => {
+            dltAllPro();
+            alert('deleted all Pro');
+          }}
+        />
       </View>
     </SafeScreen>
   );

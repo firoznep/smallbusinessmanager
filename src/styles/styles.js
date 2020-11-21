@@ -57,4 +57,12 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     // color: colors.white,
   },
+
+  crud: {
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: 70,
+    height: '45%',
+  },
 });
