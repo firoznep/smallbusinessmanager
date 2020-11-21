@@ -5,21 +5,28 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import {colors} from '../../colors/colors';
 import {styles} from '../../styles/styles';
+import BasiceIcon from './BasicIcon';
 
 const BasicButton = ({
   title,
   iconName,
   iconColor = colors.fbBlue,
+  fontColor = colors.fbBlue,
   onPress,
   style,
 }) => {
   return (
     <TouchableOpacity
       style={[styles.baslicBtn, style]}
-      title={title.toLocaleString('en-US')}
+      title={title}
       onPress={onPress}>
-      <FontAwesome5 name={iconName} size={24} color={iconColor} />
-      <Text style={[styles.btnText, {marginLeft: iconName ? 5 : 0}]}>
+      <BasiceIcon name={iconName} color={iconColor} />
+      <Text
+        style={{
+          fontWeight: 'bold',
+          color: fontColor,
+          marginLeft: iconName && title ? 10 : 0,
+        }}>
         {title}
       </Text>
     </TouchableOpacity>

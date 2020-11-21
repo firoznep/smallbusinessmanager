@@ -28,6 +28,7 @@
     "react-native-vector-icons": "^7.1.0",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
+    "reselect": "^4.0.0",
     "vasern": "^0.3.66"
   },
   "devDependencies": {

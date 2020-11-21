@@ -30,7 +30,12 @@ const ModalDateTimePicker = ({
         title={title}
         iconName="calendar-alt"
         onPress={showDatePicker}
-        style={{borderRadius: 0, borderWidth: 0, borderBottomWidth: 1}}
+        style={{
+          borderRadius: 0,
+          borderWidth: 0,
+          borderBottomWidth: 1,
+          justifyContent: 'flex-start',
+        }}
       />
 
       <DateTimePickerModal

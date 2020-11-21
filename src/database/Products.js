@@ -3,8 +3,11 @@ export const ProductModel = {
   props: {
     date: '?datetime',
     name: 'string',
+    color: 'string',
     note: '?string',
-    completed: 'boolean',
+    is_completed: 'string',
+
+    // is_completed: 'boolean',
   },
   // assignTo: "#Users"
 };
