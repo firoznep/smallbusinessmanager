@@ -25,7 +25,7 @@ const ModalDateTimePicker = ({
   };
 
   return (
-    <View>
+    <View style={{backgroundColor: 'white', width: '50%'}}>
       <BasicButton
         title={title}
         iconName="calendar-alt"
@@ -33,7 +33,7 @@ const ModalDateTimePicker = ({
         style={{
           borderRadius: 0,
           borderWidth: 0,
-          borderBottomWidth: 1,
+          // borderBottomWidth: 1,
           justifyContent: 'flex-start',
         }}
       />

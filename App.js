@@ -8,18 +8,10 @@ import SplashScreen from 'react-native-splash-screen';
 import {NavigationContainer} from '@react-navigation/native';
 import StackNavigator from './src/navigators/StackNavigator';
 
-import _ from 'lodash';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Products} from './src/database';
 
 function App() {
   useEffect(() => {
-    // Products.onLoaded(() =>
-    //   setProductReducer(Products.filter({completed: true}).data()),
-    // );
-
-    // Products.onChange(() => console.log('Data Changed'));
-
     SplashScreen.hide();
   }, []);
 

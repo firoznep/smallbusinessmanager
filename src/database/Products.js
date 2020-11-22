@@ -3,9 +3,13 @@ export const ProductModel = {
   props: {
     date: '?datetime',
     name: 'string',
-    color: 'string',
-    note: '?string',
-    is_completed: 'string',
+    model: '?string',
+    color: '?[]string',
+    cost_price: 'int',
+    expenses: 'int',
+    profit_percent: 'int',
+    sale_price: 'int',
+    description: '?string',
 
     // is_completed: 'boolean',
   },

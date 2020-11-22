@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Animated,
   View,
 } from 'react-native';
 import {useSelector} from 'react-redux';
@@ -116,6 +117,8 @@ const ProductDetail = ({navigation}) => {
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={ItemSeparatorComponent}
         // getItemLayout={getItemLayout}
+        onEndReachedThreshold={6}
+        scrollsToTop={true}
         initialNumToRender={7}
         removeClippedSubviews={true}
         viewabilityConfig={VIEWABILITY_CONFIG}

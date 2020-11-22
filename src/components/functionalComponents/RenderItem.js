@@ -56,9 +56,13 @@ const RenderItem = ({handleDelete, handleUpdate, item}) => {
       <View style={styles.item}>
         <Text>{new Date(item.date).toDateString()}</Text>
         <Text style={styles.title}>{item.name}</Text>
-        <Text>{item.note}</Text>
-        <Text>{item.is_completed}</Text>
+        <Text>{item.description}</Text>
         <Text>{item.color}</Text>
+        <Text>{item.model}</Text>
+        <Text>{item.cost_price}</Text>
+        <Text>{item.expenses}</Text>
+        <Text>{item.profit_percent}</Text>
+        <Text>{item.sale_price}</Text>
       </View>
     </Swipeable>
   );

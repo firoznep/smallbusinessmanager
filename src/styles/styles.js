@@ -18,13 +18,14 @@ export const styles = StyleSheet.create({
   baslicBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 5,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
     borderWidth: 1,
     borderRadius: 8,
     borderColor: colors.fbBlue,
     marginVertical: 5,
     justifyContent: 'center',
-    width: '50%',
+    // width: '50%',
   },
   roundBtn: {
     position: 'absolute',

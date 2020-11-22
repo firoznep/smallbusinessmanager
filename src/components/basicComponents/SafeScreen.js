@@ -4,7 +4,7 @@ import {colors} from '../../colors/colors';
 
 const SafeScreen = ({children}) => {
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, padding: 10}}>
       <StatusBar barStyle="light-content" backgroundColor={colors.fbBlue} />
       {children}
     </SafeAreaView>
