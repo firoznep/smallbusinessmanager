@@ -3,6 +3,7 @@ import {View} from 'react-native';
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
+import {styles} from '../../styles/styles';
 import BasicButton from './BasicButton';
 
 const ModalDateTimePicker = ({
@@ -25,17 +26,12 @@ const ModalDateTimePicker = ({
   };
 
   return (
-    <View style={{backgroundColor: 'white', width: '50%'}}>
+    <View>
       <BasicButton
         title={title}
         iconName="calendar-alt"
         onPress={showDatePicker}
-        style={{
-          borderRadius: 0,
-          borderWidth: 0,
-          // borderBottomWidth: 1,
-          justifyContent: 'flex-start',
-        }}
+        style={styles.whiteBtn}
       />
 
       <DateTimePickerModal

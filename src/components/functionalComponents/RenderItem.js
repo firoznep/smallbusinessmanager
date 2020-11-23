@@ -1,49 +1,37 @@
-import React, {memo} from 'react';
-import {Animated, Text, TouchableOpacity, View} from 'react-native';
+import React from 'react';
+import {Text, View} from 'react-native';
 
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {styles} from '../../styles/styles';
 
 import _ from 'lodash';
+
+import {styles} from '../../styles/styles';
 import {colors} from '../../colors/colors';
+import BasicButton from '../basicComponents/BasicButton';
+import {formatToCurrencyInd} from '../../util/utilFunc';
 
 const RightActions = ({deleteButtonRight, updateButtonRight}) => {
-  // const scale = dragX.interpolate({
-  //   inputRange: [-100, 0],
-  //   outputRange: [0.7, 0],
-  // });
   return (
     <View
       style={{
-        margin: 10,
+        margin: 5,
         justifyContent: 'space-between',
       }}>
-      <TouchableOpacity onPress={deleteButtonRight} style={styles.crud}>
-        <Animated.Text
-          style={{
-            fontWeight: 'bold',
-            // transform: [{scale}],
-          }}>
-          <FontAwesome5 name="times" size={28} color="yellow" />
-        </Animated.Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={updateButtonRight}
-        style={[styles.crud, {backgroundColor: colors.fbBlue}]}>
-        <Animated.Text
-          style={{
-            fontWeight: 'bold',
-            // transform: [{scale}],
-          }}>
-          <FontAwesome5 name="edit" size={28} color={colors.yellow} />
-        </Animated.Text>
-      </TouchableOpacity>
+      <BasicButton
+        onPress={deleteButtonRight}
+        iconName="times"
+        iconColor={colors.yellow}
+        style={styles.crud}
+      />
+      <BasicButton
+        iconName="edit"
+        style={[styles.crud, {backgroundColor: 'yellow'}]}
+      />
     </View>
   );
 };
 
+// MAIN FUNC
 const RenderItem = ({handleDelete, handleUpdate, item}) => {
   return (
     <Swipeable
@@ -54,18 +42,87 @@ const RenderItem = ({handleDelete, handleUpdate, item}) => {
         />
       )}>
       <View style={styles.item}>
-        <Text>{new Date(item.date).toDateString()}</Text>
-        <Text style={styles.title}>{item.name}</Text>
-        <Text>{item.description}</Text>
-        <Text>{item.color}</Text>
-        <Text>{item.model}</Text>
-        <Text>{item.cost_price}</Text>
-        <Text>{item.expenses}</Text>
-        <Text>{item.profit_percent}</Text>
-        <Text>{item.sale_price}</Text>
+        <Text
+          style={{
+            // alignSelf: 'center',
+            textAlign: 'right',
+            width: '100%',
+            color: colors.fbBlue,
+          }}>
+          {new Date(item.date).toDateString()}
+        </Text>
+
+        {item.name ? (
+          <View style={styles.childItem}>
+            <Text style={styles.subChildItem}>Name</Text>
+            <Text style={{color: colors.fbBlue, fontWeight: 'bold'}}>
+              {item.name}
+            </Text>
+          </View>
+        ) : null}
+
+        {item.real_cost ? (
+          <View style={styles.childItem}>
+            <Text style={styles.subChildItem}>Real Cost Price</Text>
+            <Text style={{color: colors.fbBlue, fontWeight: 'bold'}}>
+              {formatToCurrencyInd(item.real_cost)}
+            </Text>
+          </View>
+        ) : null}
+
+        {item.sale_price ? (
+          <View style={styles.childItem}>
+            <Text style={styles.subChildItem}>Sale Price</Text>
+            <Text style={{color: colors.fbBlue, fontWeight: 'bold'}}>
+              {formatToCurrencyInd(item.sale_price)}
+            </Text>
+          </View>
+        ) : null}
+
+        {item.color ? (
+          <View style={styles.childItem}>
+            <Text style={styles.subChildItem}>color</Text>
+            <Text>{item.color}</Text>
+          </View>
+        ) : null}
+
+        {item.model ? (
+          <View style={styles.childItem}>
+            <Text style={styles.subChildItem}>Model</Text>
+            <Text>{item.model}</Text>
+          </View>
+        ) : null}
+
+        {item.cost_price ? (
+          <View style={styles.childItem}>
+            <Text style={styles.subChildItem}>Cost Price</Text>
+            <Text>{formatToCurrencyInd(item.cost_price)}</Text>
+          </View>
+        ) : null}
+
+        {item.expenses ? (
+          <View style={styles.childItem}>
+            <Text style={styles.subChildItem}>Expenses</Text>
+            <Text>{formatToCurrencyInd(item.expenses)}</Text>
+          </View>
+        ) : null}
+
+        {item.profit_percent ? (
+          <View style={styles.childItem}>
+            <Text style={styles.subChildItem}>Get Profit</Text>
+            <Text>{item.profit_percent}%</Text>
+          </View>
+        ) : null}
+
+        {item.description ? (
+          <View style={styles.childItem}>
+            <Text style={styles.subChildItem}>Description</Text>
+            <Text>{item.description}</Text>
+          </View>
+        ) : null}
       </View>
     </Swipeable>
   );
 };
 
-export default RenderItem;
+export default React.memo(RenderItem);

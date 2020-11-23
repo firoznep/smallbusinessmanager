@@ -1,25 +1,29 @@
 import React, {useEffect, useState, useCallback, useRef} from 'react';
 import {
   FlatList,
+  Modal,
   RefreshControl,
-  SafeAreaView,
-  StatusBar,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
-  Animated,
   View,
 } from 'react-native';
+
 import {useSelector} from 'react-redux';
-import {colors} from '../../colors/colors';
+
+import _ from 'lodash';
+
+import {Products} from '../../database';
+
 import BasicButton from '../../components/basicComponents/BasicButton';
 import BasiceIcon from '../../components/basicComponents/BasicIcon';
 import SafeScreen from '../../components/basicComponents/SafeScreen';
 import RenderItem from '../../components/functionalComponents/RenderItem';
-import {Products} from '../../database';
+
 import {styles} from '../../styles/styles';
 
-import _ from 'lodash';
+import {dltAllPro} from '../../util/deleteAll';
+import FlatItemSeparator from '../../components/functionalComponents/FlatItemSeparator';
+// import {allProductData} from '../../util/dataSelector';
 
 const VIEWABILITY_CONFIG = {
   minimumViewTime: 300,
@@ -27,15 +31,13 @@ const VIEWABILITY_CONFIG = {
   waitForInteraction: true,
 };
 
+// MAIN FUNC ===================================================
 const ProductDetail = ({navigation}) => {
+  const [refreshing, setRefreshing] = useState(false);
+
   const allProductData = useSelector((state) =>
     _.reverse([...state.productReducer.allProducts.data()]),
   );
-
-  const [refreshing, setRefreshing] = useState(false);
-  // const [allProductData, setAllProductData] = useState(
-  //   _.reverse([...productsSelector]),
-  // );
 
   const flatListRef = useRef();
 
@@ -44,12 +46,7 @@ const ProductDetail = ({navigation}) => {
     flatListRef.current.scrollToOffset({animated: true, offset: 0});
   };
 
-  // console.log(allProductData);
   useEffect(() => {
-    // Products.onLoaded(() =>
-    //   setProductReducer(Products.filter({completed: true}).data()),
-    // );
-
     Products.onChange(() => {});
   }, []);
 
@@ -61,18 +58,6 @@ const ProductDetail = ({navigation}) => {
     }, 1000);
   });
 
-  const updateItem = () => {
-    let upd = {
-      date: new Date(),
-      name: 'eight',
-      color: 'red',
-      note: 'Testing by inserting an item',
-      is_completed: 'true',
-    };
-    alert('item updated');
-    return upd;
-  };
-
   const renderItem = ({item}) => (
     <RenderItem
       item={item}
@@ -81,25 +66,14 @@ const ProductDetail = ({navigation}) => {
         Products.remove(id);
         alert('Deleted');
       }}
-      handleUpdate={() => {
-        let item1 = Products.get({id: item.id});
-        Products.update(item1.id, updateItem());
-      }}
+      // handleUpdate={() => {
+      //   let item1 = Products.get({id: item.id});
+      //   Products.update(item1.id, updateItem());
+      // }}
+
+      handleUpdate={() => setVisible(true)}
     />
   );
-
-  const ItemSeparatorComponent = () => {
-    return (
-      <View
-        style={{
-          height: 2,
-          width: '50%',
-          backgroundColor: 'red',
-          alignSelf: 'center',
-        }}
-      />
-    );
-  };
 
   return (
     <SafeScreen>
@@ -115,7 +89,7 @@ const ProductDetail = ({navigation}) => {
         data={allProductData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={ItemSeparatorComponent}
+        ItemSeparatorComponent={FlatItemSeparator}
         // getItemLayout={getItemLayout}
         onEndReachedThreshold={6}
         scrollsToTop={true}
@@ -144,6 +118,8 @@ const ProductDetail = ({navigation}) => {
         }}>
         <BasiceIcon name="angle-double-up" />
       </TouchableOpacity>
+
+      <BasicButton title="delete all" onPress={() => dltAllPro()} />
     </SafeScreen>
   );
 };

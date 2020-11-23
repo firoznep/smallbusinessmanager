@@ -12,6 +12,7 @@ const BasicButton = ({
   iconName,
   iconColor = colors.fbBlue,
   fontColor = colors.fbBlue,
+  fontSize,
   onPress,
   style,
 }) => {
@@ -24,6 +25,7 @@ const BasicButton = ({
       <Text
         style={{
           fontWeight: 'bold',
+          fontSize: fontSize,
           color: fontColor,
           marginLeft: iconName && title ? 10 : 0,
         }}>
