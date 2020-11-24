@@ -32,14 +32,13 @@ const AddProduct = () => {
       <Formik
         initialValues={{
           date: new Date(),
+          img_data: '',
           name: '',
           model: '',
+          size: '',
           color: '',
-          cost_price: '',
-          expenses: '',
+          quantity: '',
           real_cost: '',
-          profit_percent: '',
-          sale_price: '',
           description: '',
         }}
         onSubmit={(values) => {

@@ -2,14 +2,13 @@ export const ProductModel = {
   name: 'Products',
   props: {
     date: '?datetime',
+    img_data: '?string',
     name: 'string',
     model: '?string',
+    size: '?string',
     color: '?string',
-    cost_price: 'int',
-    expenses: 'int',
+    quantity: 'int',
     real_cost: 'int',
-    profit_percent: 'int',
-    sale_price: 'int',
     description: '?string',
   },
 };

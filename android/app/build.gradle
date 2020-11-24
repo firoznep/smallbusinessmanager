@@ -123,6 +123,9 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    // compileSdkVersion 27            // FOR IMAGE-CROP-PICKER
+    // buildToolsVersion "27.0.3"      // FOR IMAGE-CROP-PICKER
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -132,6 +135,8 @@ android {
         applicationId "com.smallbusinessmanager"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        vectorDrawables.useSupportLibrary = true     // FOR IMAGE-CROP-PICKER
+        // targetSdkVersion 27                         // FOR IMAGE-CROP-PICKER
         versionCode 1
         versionName "1.0"
     }

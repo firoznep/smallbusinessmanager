@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import {SafeAreaView, StatusBar, Text, View} from 'react-native';
+import {Image, SafeAreaView, StatusBar, Text, View} from 'react-native';
 import {colors} from '../colors/colors';
 import BasicButton from '../components/basicComponents/BasicButton';
 import ModalDateTimePicker from '../components/basicComponents/ModalDateTimePicker';
 import SafeScreen from '../components/basicComponents/SafeScreen';
+import {getImageFromGallery} from '../util/cropImagePicker';
+import {IMG_DATA} from '../util/imgPathData';
 
 const HomeScreen = ({navigation}) => {
   const [pickedDateTime, setPickedDateTime] = useState(
@@ -20,16 +22,6 @@ const HomeScreen = ({navigation}) => {
           alignItems: 'center',
         }}>
         <Text>Home</Text>
-
-        <ModalDateTimePicker
-          pickedDateTime={setPickedDateTime}
-          title={new Date(pickedDateTime).toDateString()}
-        />
-
-        <BasicButton
-          title="test"
-          onPress={() => navigation.navigate('AddProduct')}
-        />
       </View>
     </SafeScreen>
   );

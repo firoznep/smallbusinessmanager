@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Image} from 'react-native';
 
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
@@ -42,19 +42,25 @@ const RenderItem = ({handleDelete, handleUpdate, item}) => {
         />
       )}>
       <View style={styles.item}>
-        <Text
-          style={{
-            // alignSelf: 'center',
-            textAlign: 'right',
-            width: '100%',
-            color: colors.fbBlue,
-          }}>
+        <Text style={styles.dateInItems}>
           {new Date(item.date).toDateString()}
         </Text>
 
         {item.name ? (
           <View style={styles.childItem}>
-            <Text style={styles.subChildItem}>Name</Text>
+            <View>
+              <Image
+                source={{
+                  uri: `data:${'image/jpeg'};base64,${item.img_data}`,
+                }}
+                style={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: 10,
+                  backgroundColor: colors.fbBlue,
+                }}
+              />
+            </View>
             <Text style={{color: colors.fbBlue, fontWeight: 'bold'}}>
               {item.name}
             </Text>
@@ -63,18 +69,18 @@ const RenderItem = ({handleDelete, handleUpdate, item}) => {
 
         {item.real_cost ? (
           <View style={styles.childItem}>
-            <Text style={styles.subChildItem}>Real Cost Price</Text>
+            <Text style={styles.subChildItem}>Real Cost</Text>
             <Text style={{color: colors.fbBlue, fontWeight: 'bold'}}>
               {formatToCurrencyInd(item.real_cost)}
             </Text>
           </View>
         ) : null}
 
-        {item.sale_price ? (
+        {item.quantity ? (
           <View style={styles.childItem}>
-            <Text style={styles.subChildItem}>Sale Price</Text>
+            <Text style={styles.subChildItem}>Quantity</Text>
             <Text style={{color: colors.fbBlue, fontWeight: 'bold'}}>
-              {formatToCurrencyInd(item.sale_price)}
+              {item.quantity}
             </Text>
           </View>
         ) : null}
@@ -93,24 +99,10 @@ const RenderItem = ({handleDelete, handleUpdate, item}) => {
           </View>
         ) : null}
 
-        {item.cost_price ? (
+        {item.size ? (
           <View style={styles.childItem}>
-            <Text style={styles.subChildItem}>Cost Price</Text>
-            <Text>{formatToCurrencyInd(item.cost_price)}</Text>
-          </View>
-        ) : null}
-
-        {item.expenses ? (
-          <View style={styles.childItem}>
-            <Text style={styles.subChildItem}>Expenses</Text>
-            <Text>{formatToCurrencyInd(item.expenses)}</Text>
-          </View>
-        ) : null}
-
-        {item.profit_percent ? (
-          <View style={styles.childItem}>
-            <Text style={styles.subChildItem}>Get Profit</Text>
-            <Text>{item.profit_percent}%</Text>
+            <Text style={styles.subChildItem}>Size</Text>
+            <Text>{item.size}</Text>
           </View>
         ) : null}
 

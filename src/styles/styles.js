@@ -33,6 +33,12 @@ export const styles = StyleSheet.create({
     paddingLeft: 5,
   },
 
+  dateInItems: {
+    textAlign: 'right',
+    width: '100%',
+    color: colors.fbBlue,
+  },
+
   flatItemSeparator: {
     height: 2,
     width: '50%',
@@ -88,7 +94,7 @@ export const styles = StyleSheet.create({
     borderWidth: 0,
     justifyContent: 'flex-start',
     backgroundColor: 'white',
-    borderBottomColor: colors.fbBlue,
-    borderBottomWidth: 3,
+    // borderBottomColor: colors.fbBlue,
+    // borderBottomWidth: 3,
   },
 });

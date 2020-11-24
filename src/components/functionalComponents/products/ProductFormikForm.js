@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+
+import {ScrollView, Text, TextInput} from 'react-native';
 
 import {useFormikContext} from 'formik';
-import {ScrollView, Text, TextInput, View} from 'react-native';
-import {styles} from '../../../styles/styles';
-import {formatToCurrencyInd, getTotalWithPercent} from '../../../util/utilFunc';
+
 import BasicButton from '../../basicComponents/BasicButton';
 import BasicInput from '../../basicComponents/BasicInput';
 import ModalDateTimePicker from '../../basicComponents/ModalDateTimePicker';
 import ErrorMsg from '../ErrorMsg';
-import {colors} from '../../../colors/colors';
+import GetImage from '../GetImage';
 
 const ProductFormikForm = () => {
   const {
@@ -17,21 +17,9 @@ const ProductFormikForm = () => {
     handleChange,
     handleSubmit,
     setFieldValue,
+    touched,
+    errors,
   } = useFormikContext();
-
-  useEffect(() => {
-    setFieldValue(
-      'sale_price',
-      getTotalWithPercent(
-        Number(values.cost_price) + Number(values.expenses),
-        values.profit_percent,
-      ),
-    );
-    setFieldValue(
-      'real_cost',
-      Number(values.cost_price) + Number(values.expenses),
-    );
-  }, [values.cost_price, values.expenses, values.profit_percent]);
 
   return (
     <ScrollView keyboardShouldPersistTaps="handled">
@@ -41,19 +29,30 @@ const ProductFormikForm = () => {
         title={new Date(values.date).toDateString()}
       />
 
+      {/* IMGDATA */}
+
+      <GetImage setImgData={(d) => setFieldValue('img_data', d)} />
+
       {/* NAME */}
       <BasicInput
         label="Name"
         onChangeText={handleChange('name')}
         onBlur={handleBlur('name')}
       />
-      <ErrorMsg name="name" />
+      <ErrorMsg errField={errors.name} touchedField={touched.name} />
 
       {/* MODEL */}
       <BasicInput
         label="Model"
         onChangeText={handleChange('model')}
         onBlur={handleBlur('model')}
+      />
+
+      {/* SIZE */}
+      <BasicInput
+        label="Size"
+        onChangeText={handleChange('size')}
+        onBlur={handleBlur('size')}
       />
 
       {/* COLOR */}
@@ -63,65 +62,23 @@ const ProductFormikForm = () => {
         onBlur={handleBlur('color')}
       />
 
-      {/* COST PRICE */}
+      {/* QUANTITY */}
       <BasicInput
-        label="Cost Price"
-        onChangeText={handleChange('cost_price')}
-        onBlur={handleBlur('cost_price')}
+        label="Quantity"
+        onChangeText={handleChange('quantity')}
+        onBlur={handleBlur('quantity')}
         keyboardType="numeric"
       />
-      <ErrorMsg name="cost_price" />
+      <ErrorMsg errField={errors.quantity} touchedField={touched.quantity} />
 
-      {/*  EXPENSES */}
+      {/* REAL COST */}
       <BasicInput
-        label="Expenses"
-        onChangeText={handleChange('expenses')}
-        onBlur={handleBlur('expenses')}
+        label="Real Cost"
+        onChangeText={handleChange('real_cost')}
+        onBlur={handleBlur('real_cost')}
         keyboardType="numeric"
       />
-
-      <View
-        style={{
-          backgroundColor: 'white',
-          padding: 5,
-          borderBottomWidth: 3,
-          borderBottomColor: 'orange',
-        }}>
-        <Text style={{color: colors.phGray}}>Real Cost</Text>
-        <Text style={{fontWeight: 'bold', fontSize: 18, color: 'gray'}}>
-          {formatToCurrencyInd(
-            Number(values.cost_price) + Number(values.expenses),
-          )}
-        </Text>
-      </View>
-
-      {/* MARGIN PERCENT */}
-      <BasicInput
-        label="Profit %"
-        onChangeText={handleChange('profit_percent')}
-        onBlur={handleBlur('profit_percent')}
-        keyboardType="numeric"
-      />
-
-      <View
-        style={{
-          backgroundColor: 'white',
-          padding: 5,
-          borderBottomWidth: 3,
-          borderBottomColor: 'orange',
-        }}>
-        <Text style={{color: colors.phGray}}>Sale Price</Text>
-        <Text style={{fontWeight: 'bold', fontSize: 18, color: 'gray'}}>
-          {`Sale Price: ${formatToCurrencyInd(values.sale_price)}`}
-        </Text>
-      </View>
-
-      {/* <BasicButton
-        style={styles.whiteBtn}
-        fontSize={18}
-        fontColor={'gray'}
-        title={`Sale Price: ${formatToCurrencyInd(values.sale_price)}`}
-      /> */}
+      <ErrorMsg errField={errors.real_cost} touchedField={touched.real_cost} />
 
       {/* DESCRIPTION */}
       <Text>Description</Text>
