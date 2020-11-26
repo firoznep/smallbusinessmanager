@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useCallback, useRef} from 'react';
 import {
+  Alert,
   FlatList,
   Modal,
   RefreshControl,
@@ -53,8 +54,6 @@ const ProductDetail = ({navigation}) => {
     filterByName: state.productReducer.filter.byName,
   }));
 
-  console.log(stateSelector.filterByName);
-
   let filterProductByName = stateSelector.proAllData.filter(
     (item) => item.name === stateSelector.filterByName,
   );
@@ -68,9 +67,28 @@ const ProductDetail = ({navigation}) => {
     <RenderItem
       item={item}
       handleDelete={() => {
-        let id = Products.get({id: item.id});
-        Products.remove(id);
-        alert('Deleted');
+        Alert.alert(
+          'Are you sure you want to delete this item?',
+          'Item will be deleted permanently!',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => {
+                return;
+              },
+              style: 'cancel',
+            },
+            {
+              text: 'Delete',
+              onPress: () => {
+                let id = Products.get({id: item.id});
+                Products.remove(id);
+                alert('Deleted');
+              },
+            },
+          ],
+          {cancelable: false},
+        );
       }}
       handleUpdate={() => {
         var item1 = Products.get({id: item.id});
@@ -81,7 +99,7 @@ const ProductDetail = ({navigation}) => {
   );
   return (
     <SafeScreen>
-      <Text>Total Product: {stateSelector.length} </Text>
+      <Text>Total Product: {filterProductByName.length} </Text>
       <BasicButton
         style={styles.roundBtn}
         iconName="plus"

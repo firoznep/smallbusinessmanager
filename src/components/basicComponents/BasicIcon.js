@@ -5,11 +5,11 @@ import {colors} from '../../colors/colors';
 
 const BasicIcon = ({name, color, size = 24, onPress, style}) => {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={style}>
-        <FontAwesome5 name={name} color={color} size={size} />
-      </View>
-    </TouchableOpacity>
+    <FontAwesome5 name={name} color={color} size={size} />
+    // <TouchableOpacity onPress={onPress}>
+    //   <View style={style}>
+    //   </View>
+    // </TouchableOpacity>
   );
 };
 

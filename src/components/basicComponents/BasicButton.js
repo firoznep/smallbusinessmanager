@@ -5,7 +5,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import {colors} from '../../colors/colors';
 import {styles} from '../../styles/styles';
-import BasiceIcon from './BasicIcon';
+import BasicIcon from './BasicIcon';
 
 const BasicButton = ({
   title,
@@ -21,7 +21,7 @@ const BasicButton = ({
       style={[styles.baslicBtn, style]}
       title={title}
       onPress={onPress}>
-      <BasiceIcon name={iconName} color={iconColor} />
+      <BasicIcon name={iconName} color={iconColor} />
       <Text
         style={{
           fontWeight: 'bold',

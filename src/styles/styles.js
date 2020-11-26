@@ -47,7 +47,14 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
-  homeItems: {margin: 10, padding: 10, backgroundColor: 'white', elevation: 5},
+  homeItems: {
+    margin: 10,
+    padding: 10,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
+  },
 
   item: {
     flexDirection: 'row',

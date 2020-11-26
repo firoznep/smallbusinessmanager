@@ -11,6 +11,7 @@ import UpdateProduct from '../screens/product/UpdateProduct';
 import BasicIcon from '../components/basicComponents/BasicIcon';
 import {useDispatch} from 'react-redux';
 import {productFilterScreenVisibleAction} from '../storeRedux/actions/productActions';
+import BasicButton from '../components/basicComponents/BasicButton';
 
 function getHeaderTitle(route) {
   // If the focused route is not found, we need to assume it's the initial screen
@@ -41,13 +42,12 @@ const StackNavigator = () => {
           headerTitle: getHeaderTitle(route),
           headerRight: () =>
             getHeaderTitle(route) === 'Product Detail' ? (
-              <BasicIcon
-                name="filter"
-                color="yellow"
+              <BasicButton
+                iconName="filter"
+                iconColor="yellow"
                 onPress={() => {
                   dispatch(productFilterScreenVisibleAction(true));
                 }}
-                style={{padding: 10}}
               />
             ) : null,
 

@@ -37,13 +37,7 @@ const HomeScreen = ({navigation}) => {
           }}>
           <TouchableOpacity style={styles.homeItems}>
             <Text>Total Product</Text>
-            {/* <Text>{allProductData.length}</Text> */}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.homeItems}
-            onPress={() => dispatch(filterByName('Umar'))}>
-            <Text>filterbyName</Text>
+            <Text>{allProductData.DATA.length}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.homeItems}>
