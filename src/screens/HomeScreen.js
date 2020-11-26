@@ -1,28 +1,68 @@
-import React, {useState} from 'react';
-import {Image, SafeAreaView, StatusBar, Text, View} from 'react-native';
-import {colors} from '../colors/colors';
-import BasicButton from '../components/basicComponents/BasicButton';
-import ModalDateTimePicker from '../components/basicComponents/ModalDateTimePicker';
+import React, {useCallback, useState} from 'react';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+
+import _ from 'lodash';
+
 import SafeScreen from '../components/basicComponents/SafeScreen';
-import {getImageFromGallery} from '../util/cropImagePicker';
-import {IMG_DATA} from '../util/imgPathData';
+import {styles} from '../styles/styles';
+import {filterByName} from '../storeRedux/actions/productActions';
 
 const HomeScreen = ({navigation}) => {
-  const [pickedDateTime, setPickedDateTime] = useState(
-    new Date().toDateString(),
-  );
+  const allProductData = useSelector((state) => ({
+    DATA: _.reverse([...state.productReducer.allProducts.data()]),
+    filterByN: state.productReducer.filter,
+  }));
+
+  const dispatch = useDispatch();
+
+  // const dd = useCallback((name) => dispatch(filterByName(name)));
+
+  // dd('muslim');
 
   return (
     <SafeScreen>
-      <View
+      <ScrollView
         style={{
           flex: 1,
-          justifyContent: 'center',
-          // backgroundColor: 'yellow',
-          alignItems: 'center',
+          // justifyContent: 'center',
+          backgroundColor: 'white',
+          // alignItems: 'center',
         }}>
-        <Text>Home</Text>
-      </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+          }}>
+          <TouchableOpacity style={styles.homeItems}>
+            <Text>Total Product</Text>
+            {/* <Text>{allProductData.length}</Text> */}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.homeItems}
+            onPress={() => dispatch(filterByName('Umar'))}>
+            <Text>filterbyName</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.homeItems}>
+            <Text>Placeholder</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.homeItems}>
+            <Text>Placeholder</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.homeItems}>
+            <Text>Placeholder</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.homeItems}>
+            <Text>Placeholder</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </SafeScreen>
   );
 };

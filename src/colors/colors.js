@@ -5,4 +5,5 @@ export const colors = {
   black: '#000',
   red: '#ff0000',
   yellow: '#ffff00',
+  backGColor: '#f7ff7d',
 };

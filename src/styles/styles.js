@@ -29,22 +29,25 @@ export const styles = StyleSheet.create({
 
   childItem: {
     margin: 5,
-    borderLeftWidth: 2,
+    borderLeftWidth: 1,
+    borderLeftColor: colors.fbBlue,
     paddingLeft: 5,
   },
 
   dateInItems: {
-    textAlign: 'right',
-    width: '100%',
+    // textAlign: 'right',
+    // width: '100%',
     color: colors.fbBlue,
   },
 
   flatItemSeparator: {
-    height: 2,
-    width: '50%',
-    backgroundColor: 'gray',
+    height: 3,
+    width: '100%',
+    backgroundColor: colors.phGray,
     alignSelf: 'center',
   },
+
+  homeItems: {margin: 10, padding: 10, backgroundColor: 'white', elevation: 5},
 
   item: {
     flexDirection: 'row',
@@ -54,6 +57,12 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     padding: 10,
     marginVertical: 8,
+  },
+
+  itemMainChild: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 
   roundBtn: {
@@ -94,7 +103,5 @@ export const styles = StyleSheet.create({
     borderWidth: 0,
     justifyContent: 'flex-start',
     backgroundColor: 'white',
-    // borderBottomColor: colors.fbBlue,
-    // borderBottomWidth: 3,
   },
 });

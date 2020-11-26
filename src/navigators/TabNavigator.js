@@ -26,7 +26,12 @@ const TabNavigator = () => {
         options={{
           tabBarLabel: 'Product Detail',
           tabBarIcon: ({color, size}) => (
-            <FontAwesome5 name="layer-group" color={color} size={size} />
+            <FontAwesome5
+              name="layer-group"
+              color={color}
+              size={size}
+              style={{padding: 10}}
+            />
           ),
         }}
       />

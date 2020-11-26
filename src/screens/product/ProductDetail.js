@@ -8,14 +8,13 @@ import {
   View,
 } from 'react-native';
 
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import _ from 'lodash';
 
 import {Products} from '../../database';
 
 import BasicButton from '../../components/basicComponents/BasicButton';
-import BasiceIcon from '../../components/basicComponents/BasicIcon';
 import SafeScreen from '../../components/basicComponents/SafeScreen';
 import RenderItem from '../../components/functionalComponents/RenderItem';
 
@@ -23,7 +22,12 @@ import {styles} from '../../styles/styles';
 
 import {dltAllPro} from '../../util/deleteAll';
 import FlatItemSeparator from '../../components/functionalComponents/FlatItemSeparator';
-// import {allProductData} from '../../util/dataSelector';
+import {
+  filterByName,
+  productFilterScreenVisibleAction,
+  updateProAction,
+} from '../../storeRedux/actions/productActions';
+import BasicInput from '../../components/basicComponents/BasicInput';
 
 const VIEWABILITY_CONFIG = {
   minimumViewTime: 300,
@@ -35,27 +39,29 @@ const VIEWABILITY_CONFIG = {
 const ProductDetail = ({navigation}) => {
   const [refreshing, setRefreshing] = useState(false);
 
-  const allProductData = useSelector((state) =>
-    _.reverse([...state.productReducer.allProducts.data()]),
-  );
-
-  const flatListRef = useRef();
-
-  const toTop = () => {
-    // use current
-    flatListRef.current.scrollToOffset({animated: true, offset: 0});
-  };
-
-  useEffect(() => {
-    Products.onChange(() => {});
-  }, []);
-
   const onRefresh = useCallback(() => {
     setRefreshing(true);
 
     setTimeout(() => {
       setRefreshing(false);
-    }, 1000);
+    }, 100);
+  });
+
+  const stateSelector = useSelector((state) => ({
+    proAllData: _.reverse([...state.productReducer.allProducts.data()]),
+    filterScreen: state.productReducer.productFilterScreenIsVisible,
+    filterByName: state.productReducer.filter.byName,
+  }));
+
+  console.log(stateSelector.filterByName);
+
+  let filterProductByName = stateSelector.proAllData.filter(
+    (item) => item.name === stateSelector.filterByName,
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    Products.onChange(() => {});
   });
 
   const renderItem = ({item}) => (
@@ -66,27 +72,49 @@ const ProductDetail = ({navigation}) => {
         Products.remove(id);
         alert('Deleted');
       }}
-      // handleUpdate={() => {
-      //   let item1 = Products.get({id: item.id});
-      //   Products.update(item1.id, updateItem());
-      // }}
-
-      handleUpdate={() => setVisible(true)}
+      handleUpdate={() => {
+        var item1 = Products.get({id: item.id});
+        dispatch(updateProAction(item1));
+        navigation.navigate('UpdateProduct');
+      }}
     />
   );
-
   return (
     <SafeScreen>
-      <Text>Total Product: {allProductData.length} </Text>
+      <Text>Total Product: {stateSelector.length} </Text>
       <BasicButton
         style={styles.roundBtn}
         iconName="plus"
         onPress={() => navigation.navigate('AddProduct')}
       />
+      <Modal
+        visible={stateSelector.filterScreen}
+        animationType="slide"
+        transparent={true}>
+        <View
+          style={{
+            backgroundColor: 'rgba(11,23,44,.5)',
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{width: '80%', height: '80%', backgroundColor: 'yellow'}}>
+            <BasicButton
+              title="Close"
+              onPress={() => dispatch(productFilterScreenVisibleAction(false))}
+            />
+            <BasicInput
+              label="By Name"
+              onChangeText={(t) => dispatch(filterByName(t))}
+              value={stateSelector.filterByName}
+            />
+          </View>
+        </View>
+      </Modal>
 
       <FlatList
-        ref={flatListRef}
-        data={allProductData}
+        data={filterProductByName}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={FlatItemSeparator}
@@ -100,26 +128,8 @@ const ProductDetail = ({navigation}) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
-      <TouchableOpacity
-        onPress={() => toTop()}
-        style={{
-          position: 'absolute',
-          justifyContent: 'center',
-          alignItems: 'center',
-          right: 5,
-          top: 5,
-          borderRadius: 50,
-          width: 50,
-          height: 50,
-          // backgroundColor: 'yellow',
-          borderWidth: 0,
-          // elevation: 10,
-          zIndex: 99,
-        }}>
-        <BasiceIcon name="angle-double-up" />
-      </TouchableOpacity>
 
-      <BasicButton title="delete all" onPress={() => dltAllPro()} />
+      {/* <BasicButton title="delete all" onPress={() => dltAllPro()} /> */}
     </SafeScreen>
   );
 };

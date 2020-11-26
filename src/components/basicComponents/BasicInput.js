@@ -5,7 +5,7 @@ import {colors} from '../../colors/colors';
 // import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Hoshi} from 'react-native-textinput-effects';
 
-const BasicInput = ({label, onChangeText, onBlur, ...otherProps}) => {
+const BasicInput = ({label, onChangeText, onBlur, value, ...otherProps}) => {
   return (
     <View style={{marginVertical: 5}}>
       <Hoshi
@@ -22,6 +22,7 @@ const BasicInput = ({label, onChangeText, onBlur, ...otherProps}) => {
         onChangeText={onChangeText}
         onBlur={onBlur}
         selectTextOnFocus={true}
+        value={value}
         {...otherProps}
       />
     </View>

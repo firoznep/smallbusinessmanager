@@ -1,6 +1,7 @@
-import {useSelector} from 'react-redux';
 import _ from 'lodash';
+import {createSelector} from 'reselect';
 
-export const allProductData = useSelector((state) =>
-  _.reverse([...state.productReducer.allProducts.data()]),
+export const selectAllProductsData = createSelector(
+  (state) => state.productReducer,
+  (productReducer) => _.reverse([...productReducer.allProducts.data()]),
 );

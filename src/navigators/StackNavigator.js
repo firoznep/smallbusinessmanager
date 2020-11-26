@@ -7,6 +7,10 @@ import TabNavigator from './TabNavigator';
 
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {colors} from '../colors/colors';
+import UpdateProduct from '../screens/product/UpdateProduct';
+import BasicIcon from '../components/basicComponents/BasicIcon';
+import {useDispatch} from 'react-redux';
+import {productFilterScreenVisibleAction} from '../storeRedux/actions/productActions';
 
 function getHeaderTitle(route) {
   // If the focused route is not found, we need to assume it's the initial screen
@@ -27,6 +31,7 @@ function getHeaderTitle(route) {
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
+  const dispatch = useDispatch();
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -34,15 +39,28 @@ const StackNavigator = () => {
         component={TabNavigator}
         options={({route}) => ({
           headerTitle: getHeaderTitle(route),
+          headerRight: () =>
+            getHeaderTitle(route) === 'Product Detail' ? (
+              <BasicIcon
+                name="filter"
+                color="yellow"
+                onPress={() => {
+                  dispatch(productFilterScreenVisibleAction(true));
+                }}
+                style={{padding: 10}}
+              />
+            ) : null,
+
           headerStyle: {
             backgroundColor: colors.fbBlue,
           },
-          headerTintColor: colors.yellow,
+          headerTintColor: colors.white,
           headerTitleAlign: 'center',
           headerTitleStyle: {fontWeight: 'bold'},
         })}
       />
       <Stack.Screen name="AddProduct" component={AddProduct} />
+      <Stack.Screen name="UpdateProduct" component={UpdateProduct} />
     </Stack.Navigator>
   );
 };

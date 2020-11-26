@@ -38,6 +38,7 @@ const ProductFormikForm = () => {
         label="Name"
         onChangeText={handleChange('name')}
         onBlur={handleBlur('name')}
+        value={values.name}
       />
       <ErrorMsg errField={errors.name} touchedField={touched.name} />
 
@@ -46,6 +47,7 @@ const ProductFormikForm = () => {
         label="Model"
         onChangeText={handleChange('model')}
         onBlur={handleBlur('model')}
+        value={values.model}
       />
 
       {/* SIZE */}
@@ -53,6 +55,7 @@ const ProductFormikForm = () => {
         label="Size"
         onChangeText={handleChange('size')}
         onBlur={handleBlur('size')}
+        value={values.size}
       />
 
       {/* COLOR */}
@@ -60,6 +63,7 @@ const ProductFormikForm = () => {
         label="Color"
         onChangeText={handleChange('color')}
         onBlur={handleBlur('color')}
+        value={values.color}
       />
 
       {/* QUANTITY */}
@@ -68,15 +72,19 @@ const ProductFormikForm = () => {
         onChangeText={handleChange('quantity')}
         onBlur={handleBlur('quantity')}
         keyboardType="numeric"
+        value={values.quantity}
       />
       <ErrorMsg errField={errors.quantity} touchedField={touched.quantity} />
 
       {/* REAL COST */}
       <BasicInput
         label="Real Cost"
-        onChangeText={handleChange('real_cost')}
+        onChangeText={(n) =>
+          setFieldValue('real_cost', Math.floor(n).toString())
+        }
         onBlur={handleBlur('real_cost')}
         keyboardType="numeric"
+        value={values.real_cost}
       />
       <ErrorMsg errField={errors.real_cost} touchedField={touched.real_cost} />
 
@@ -84,11 +92,16 @@ const ProductFormikForm = () => {
       <Text>Description</Text>
       <TextInput
         placeholder="Description"
-        onChangeText={handleChange('description')}
-        onBlur={handleBlur('description')}
+        onChangeText={(d) => setFieldValue('description', d)}
+        autoCapitalize="none"
         multiline={true}
-        numberOfLines={5}
+        numberOfLines={3}
         textAlignVertical="top"
+        onBlur={handleBlur('description')}
+        value={values.description}
+        keyboardType="twitter"
+        blurOnSubmit={true}
+        selectTextOnFocus={true}
         style={{
           backgroundColor: 'white',
           borderWidth: 2,
