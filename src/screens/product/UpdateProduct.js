@@ -15,6 +15,7 @@ const UpdateProduct = () => {
       <Formik
         initialValues={{
           date: new Date(),
+          vendor: updItem.vendor,
           name: updItem.name,
           model: updItem.model,
           size: updItem.size,

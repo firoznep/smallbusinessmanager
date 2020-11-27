@@ -33,6 +33,7 @@ const AddProduct = () => {
         initialValues={{
           date: new Date(),
           img_data: '',
+          vendor: '',
           name: '',
           model: '',
           size: '',

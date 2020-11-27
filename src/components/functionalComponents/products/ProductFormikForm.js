@@ -9,6 +9,7 @@ import BasicInput from '../../basicComponents/BasicInput';
 import ModalDateTimePicker from '../../basicComponents/ModalDateTimePicker';
 import ErrorMsg from '../ErrorMsg';
 import GetImage from '../GetImage';
+import BasicIcon from '../../basicComponents/BasicIcon';
 
 const ProductFormikForm = () => {
   const {
@@ -33,9 +34,17 @@ const ProductFormikForm = () => {
 
       <GetImage setImgData={(d) => setFieldValue('img_data', d)} />
 
+      {/* VENDOR */}
+      <BasicInput
+        label="Vendor"
+        onChangeText={handleChange('vendor')}
+        onBlur={handleBlur('vendor')}
+        value={values.vendor}
+      />
+
       {/* NAME */}
       <BasicInput
-        label="Name"
+        label={`Name *`}
         onChangeText={handleChange('name')}
         onBlur={handleBlur('name')}
         value={values.name}
@@ -68,7 +77,7 @@ const ProductFormikForm = () => {
 
       {/* QUANTITY */}
       <BasicInput
-        label="Quantity"
+        label="Quantity *"
         onChangeText={handleChange('quantity')}
         onBlur={handleBlur('quantity')}
         keyboardType="numeric"
@@ -78,7 +87,7 @@ const ProductFormikForm = () => {
 
       {/* REAL COST */}
       <BasicInput
-        label="Real Cost"
+        label="Real Cost *"
         onChangeText={(n) =>
           setFieldValue('real_cost', Math.floor(n).toString())
         }

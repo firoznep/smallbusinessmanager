@@ -1,8 +1,10 @@
 import _ from 'lodash';
 import {Products} from '../../database';
 import {
+  FILTER_ALL,
   FILTER_BY_DATE,
   FILTER_BY_NAME,
+  IS_FLATLIST_REFRESHED,
   PRODUCT_FILTER_SCREEN_VISIBLE,
   UPDATE_PRO_BY_ID,
 } from '../actions/productActionType';
@@ -11,20 +13,29 @@ const INITIAL_STATE = {
   allProducts: Products,
   filter: {
     byName: '',
-    byDate: '',
+    byDate: new Date(),
   },
   updateItemById: {},
   productFilterScreenIsVisible: false,
+  isFlatListRefreshed: false,
 };
 
 const ProductReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case UPDATE_PRO_BY_ID:
       return {...state, updateItemById: action.payload};
+
     case FILTER_BY_NAME:
       return {...state, filter: {...state.filter, byName: action.payload}};
+
+    case FILTER_BY_DATE:
+      return {...state, filter: {...state.filter, byDate: action.payload}};
+
     case PRODUCT_FILTER_SCREEN_VISIBLE:
       return {...state, productFilterScreenIsVisible: action.payload};
+
+    case IS_FLATLIST_REFRESHED:
+      return {...state, isFlatListRefreshed: action.payload};
 
     default:
       return state;

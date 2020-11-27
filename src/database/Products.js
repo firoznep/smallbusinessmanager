@@ -3,6 +3,7 @@ export const ProductModel = {
   props: {
     date: '?datetime',
     img_data: '?string',
+    vendor: '?string',
     name: 'string',
     model: '?string',
     size: '?string',

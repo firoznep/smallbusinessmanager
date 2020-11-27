@@ -16,6 +16,9 @@ import RenderItemChild from './RenderItemChild';
 const RenderItem = ({handleDelete, handleUpdate, item}) => {
   return (
     <Swipeable
+      leftThreshold={80}
+      friction={3}
+      rightThreshold={40}
       renderRightActions={() => (
         <RightAction
           deleteButtonRight={handleDelete}
@@ -28,6 +31,12 @@ const RenderItem = ({handleDelete, handleUpdate, item}) => {
             <Text style={styles.dateInItems}>
               {new Date(item.date).toDateString()}
             </Text>
+
+            <RenderItemChild
+              itemField={item.vendor}
+              title="Vendor"
+              fieldColor={colors.fbBlue}
+            />
 
             <RenderItemChild
               itemField={item.quantity}
