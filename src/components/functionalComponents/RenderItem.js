@@ -42,12 +42,19 @@ const RenderItem = ({handleDelete, handleUpdate, item}) => {
               itemField={item.quantity}
               title="Quantity"
               fieldColor={colors.fbBlue}
+              itemUnit={item.unit}
+              itemFieldSize={18}
             />
 
             {item.real_cost ? (
               <View style={styles.childItem}>
                 <Text style={styles.subChildItem}>Real Cost</Text>
-                <Text style={{color: colors.fbBlue, fontWeight: 'bold'}}>
+                <Text
+                  style={{
+                    color: colors.fbBlue,
+                    fontWeight: 'bold',
+                    fontSize: 18,
+                  }}>
                   {formatToCurrencyInd(item.real_cost)}
                 </Text>
               </View>

@@ -38,6 +38,7 @@ const AddProduct = () => {
           model: '',
           size: '',
           color: '',
+          unit: '',
           quantity: '',
           real_cost: '',
           description: '',

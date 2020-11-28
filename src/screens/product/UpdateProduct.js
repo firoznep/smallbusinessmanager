@@ -20,6 +20,7 @@ const UpdateProduct = () => {
           model: updItem.model,
           size: updItem.size,
           color: updItem.color,
+          unit: updItem.unit,
           quantity: updItem.quantity.toString(),
           real_cost: updItem.real_cost.toString(),
           description: updItem.description,

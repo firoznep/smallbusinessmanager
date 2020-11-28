@@ -28,6 +28,7 @@ import BasicDropdownPicker from '../../components/basicComponents/BasicDropdownP
 import RenderItemChild from '../../components/functionalComponents/RenderItemChild';
 import {VIEWABILITY_CONFIG} from '../../util/utilFunc';
 import {sortedUniqBy} from '../../util/sortedUniq';
+import BasicFlatList from '../../components/basicComponents/BasicFlatList';
 
 // MAIN FUNC ===================================================
 const ProductDetail = ({navigation}) => {
@@ -153,13 +154,7 @@ const ProductDetail = ({navigation}) => {
         visible={isFilterScreenVisible}
         animationType="slide"
         transparent={true}>
-        <View
-          style={{
-            backgroundColor: 'rgba(11,23,44,.5)',
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+        <View style={styles.modalView}>
           <View
             style={{width: '80%', height: '80%', backgroundColor: 'yellow'}}>
             <BasicButton
@@ -210,17 +205,9 @@ const ProductDetail = ({navigation}) => {
         </View>
       </Modal>
 
-      <FlatList
+      <BasicFlatList
         data={data}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={FlatItemSeparator}
-        // getItemLayout={getItemLayout}
-        onEndReachedThreshold={7}
-        scrollsToTop={true}
-        initialNumToRender={7}
-        removeClippedSubviews={true}
-        viewabilityConfig={VIEWABILITY_CONFIG}
         refreshControl={
           <RefreshControl
             refreshing={isFlatListRefreshed}
@@ -228,6 +215,8 @@ const ProductDetail = ({navigation}) => {
           />
         }
       />
+
+      <BasicButton title="Delete All" onPress={dltAllPro} />
     </SafeScreen>
   );
 };

@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   },
 
   childItem: {
-    margin: 5,
+    marginVertical: 2,
     borderLeftWidth: 1,
     borderLeftColor: colors.fbBlue,
     paddingLeft: 5,
@@ -70,6 +70,13 @@ export const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+
+  modalView: {
+    backgroundColor: 'rgba(11,23,44,.5)',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   roundBtn: {

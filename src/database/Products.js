@@ -8,6 +8,7 @@ export const ProductModel = {
     model: '?string',
     size: '?string',
     color: '?string',
+    unit: '?string',
     quantity: 'int',
     real_cost: 'int',
     description: '?string',

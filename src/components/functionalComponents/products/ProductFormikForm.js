@@ -9,7 +9,6 @@ import BasicInput from '../../basicComponents/BasicInput';
 import ModalDateTimePicker from '../../basicComponents/ModalDateTimePicker';
 import ErrorMsg from '../ErrorMsg';
 import GetImage from '../GetImage';
-import BasicIcon from '../../basicComponents/BasicIcon';
 
 const ProductFormikForm = () => {
   const {
@@ -73,6 +72,14 @@ const ProductFormikForm = () => {
         onChangeText={handleChange('color')}
         onBlur={handleBlur('color')}
         value={values.color}
+      />
+
+      {/* UNIT */}
+      <BasicInput
+        label="Unit"
+        onChangeText={handleChange('unit')}
+        onBlur={handleBlur('unit')}
+        value={values.unit}
       />
 
       {/* QUANTITY */}
