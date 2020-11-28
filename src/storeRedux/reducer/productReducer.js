@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   allProducts: Products,
   filter: {
     byName: '',
-    byDate: new Date(),
+    byDate: new Date().toDateString(),
   },
   updateItemById: {},
   productFilterScreenIsVisible: false,

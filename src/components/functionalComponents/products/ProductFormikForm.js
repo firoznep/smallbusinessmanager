@@ -44,7 +44,7 @@ const ProductFormikForm = () => {
 
       {/* NAME */}
       <BasicInput
-        label={`Name *`}
+        label={`Product Name *`}
         onChangeText={handleChange('name')}
         onBlur={handleBlur('name')}
         value={values.name}

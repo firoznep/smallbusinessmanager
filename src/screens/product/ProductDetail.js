@@ -15,27 +15,27 @@ import RenderItem from '../../components/functionalComponents/RenderItem';
 
 import {styles} from '../../styles/styles';
 
-import {dltAllPro} from '../../util/deleteAll';
+import {dltAllPro, handleDelete} from '../../util/handleDelete';
 import FlatItemSeparator from '../../components/functionalComponents/FlatItemSeparator';
 import {
+  filterByDate,
   filterByName,
   isFlatListRefreshedAction,
   productFilterScreenVisibleAction,
   updateProAction,
 } from '../../storeRedux/actions/productActions';
 import BasicDropdownPicker from '../../components/basicComponents/BasicDropdownPicker';
-
-const VIEWABILITY_CONFIG = {
-  minimumViewTime: 300,
-  viewAreaCoveragePercentThreshold: 100,
-  waitForInteraction: true,
-};
+import RenderItemChild from '../../components/functionalComponents/RenderItemChild';
+import {VIEWABILITY_CONFIG} from '../../util/utilFunc';
+import {sortedUniqBy} from '../../util/sortedUniq';
 
 // MAIN FUNC ===================================================
 const ProductDetail = ({navigation}) => {
+  // STATES
   const [data, setData] = useState([]);
   const [filterBy, setFilterBy] = useState('');
 
+  // REDUX SELECTORS
   const isFlatListRefreshed = useSelector(
     (state) => state.productReducer.isFlatListRefreshed,
   );
@@ -56,20 +56,13 @@ const ProductDetail = ({navigation}) => {
     (state) => state.productReducer.filter.byDate,
   );
 
-  const filterProductByName = useSelector((state) =>
-    state.productReducer.allProducts
-      .data()
-      .filter((item) => item.name === filteredName),
+  // ------------------
+  const filterProductByName = filterAllProduct.filter(
+    (item) => item.name === filteredName,
   );
 
-  const filterProductByDate = useSelector((state) =>
-    state.productReducer.allProducts
-      .data()
-      .filter(
-        (item) =>
-          new Date(item.date).toDateString('en-US') ===
-          filteredDate.toDateString('en-US'),
-      ),
+  const filterProductByDate = filterAllProduct.filter(
+    (item) => new Date(item.date).toDateString('en-US') === filteredDate,
   );
 
   const dispatch = useDispatch();
@@ -78,13 +71,15 @@ const ProductDetail = ({navigation}) => {
     Products.onChange(() => {
       setProductFilterFunc();
     });
-    setProductFilterFunc();
+    const unSubscribe = setProductFilterFunc();
+    // return unSubscribe;
   }, [isFlatListRefreshed]);
 
   const onRefresh = useCallback(() => {
     dispatch(isFlatListRefreshedAction(true));
+    setFilterBy('all');
+    setData(filterAllProduct);
 
-    setProductFilterFunc();
     dispatch(isFlatListRefreshedAction(false));
   });
 
@@ -92,49 +87,33 @@ const ProductDetail = ({navigation}) => {
     switch (filterBy) {
       case 'all':
         setData(filterAllProduct);
+        setFilterBy('all');
+        flt();
         break;
 
       case 'name':
         setData(filterProductByName);
+        setFilterBy('name');
+        flt();
         break;
 
       case 'date':
         setData(filterProductByDate);
+        setFilterBy('date');
+        flt();
         break;
 
       default:
         setData(filterProductByDate);
+        setFilterBy('date');
+        flt();
     }
   };
 
   const renderItem = ({item}) => (
     <RenderItem
       item={item}
-      handleDelete={() => {
-        Alert.alert(
-          'Are you sure you want to delete this item?',
-          'Item will be deleted permanently!',
-          [
-            {
-              text: 'Cancel',
-              onPress: () => {
-                return;
-              },
-              style: 'cancel',
-            },
-            {
-              text: 'Delete',
-              onPress: () => {
-                let id = Products.get({id: item.id});
-                Products.remove(id);
-                setProductFilterFunc();
-                alert('Deleted');
-              },
-            },
-          ],
-          {cancelable: false},
-        );
-      }}
+      handleDelete={() => handleDelete(Products, item)}
       handleUpdate={() => {
         var item1 = Products.get({id: item.id});
         dispatch(updateProAction(item1));
@@ -143,9 +122,28 @@ const ProductDetail = ({navigation}) => {
     />
   );
 
+  let flt = () => {
+    switch (filterBy) {
+      case 'name':
+        return filteredName;
+      case 'date':
+        return filteredDate;
+      case 'all':
+        return '';
+    }
+  };
+
   return (
     <SafeScreen>
-      <Text>Total Product: {data.length} </Text>
+      {data.length ? (
+        <RenderItemChild itemField={data.length} title={`Total: ${flt()}`} />
+      ) : (
+        <View style={{alignItems: 'center'}}>
+          <Text style={{color: 'red', fontSize: 24}}>No data available!</Text>
+          <Text style={{fontSize: 18, fontWeight: 'bold'}}>By: {flt()}</Text>
+          <Text>Please, filter by another {filterBy}</Text>
+        </View>
+      )}
       <BasicButton
         style={styles.roundBtn}
         iconName="plus"
@@ -177,21 +175,36 @@ const ProductDetail = ({navigation}) => {
                 selectedValue={filterBy}
                 onValueChange={(itemValue) => setFilterBy(itemValue)}>
                 <Picker.Item label="Filter By" value="" color="gray" />
-                <Picker.Item label="All" value="all" />
-                <Picker.Item label="By Name" value="name" />
-                <Picker.Item label="By Date" value="date" />
+                <Picker.Item label="Name" value="name" />
+                <Picker.Item label="Date" value="date" />
+                <Picker.Item label="Show All" value="all" />
               </BasicDropdownPicker>
 
-              <BasicDropdownPicker
-                selectedValue={filteredName}
-                onValueChange={(itemValue) =>
-                  dispatch(filterByName(itemValue))
-                }>
-                <Picker.Item label="Select Name" value="" color="gray" />
-                <Picker.Item label="tffg" value="tffg" />
-                <Picker.Item label="item1" value="item1" />
-                <Picker.Item label="hoodie for girl" value="hoodie for girl" />
-              </BasicDropdownPicker>
+              {filterBy === 'name' ? (
+                <BasicDropdownPicker
+                  selectedValue={filteredName}
+                  onValueChange={(itemValue) =>
+                    dispatch(filterByName(itemValue))
+                  }>
+                  <Picker.Item label="Select Name" value={null} color="gray" />
+                  {sortedUniqBy(filterAllProduct, 'name').map((elm) => {
+                    return <Picker.Item label={elm} value={elm} key={elm} />;
+                  })}
+                </BasicDropdownPicker>
+              ) : null}
+
+              {filterBy === 'date' ? (
+                <BasicDropdownPicker
+                  selectedValue={filteredDate}
+                  onValueChange={(itemValue) =>
+                    dispatch(filterByDate(itemValue))
+                  }>
+                  <Picker.Item label="Select Date" value={null} color="gray" />
+                  {sortedUniqBy(filterAllProduct, 'date').map((elm) => {
+                    return <Picker.Item label={elm} value={elm} key={elm} />;
+                  })}
+                </BasicDropdownPicker>
+              ) : null}
             </View>
           </View>
         </View>
@@ -215,8 +228,6 @@ const ProductDetail = ({navigation}) => {
           />
         }
       />
-
-      <BasicButton title="delete all" onPress={() => dltAllPro()} />
     </SafeScreen>
   );
 };

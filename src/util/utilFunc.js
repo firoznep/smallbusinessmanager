@@ -21,3 +21,9 @@ export const getTotalWithPercent = (t, per) => {
   let result = Math.floor((per / 100) * t + t);
   return result;
 };
+
+export const VIEWABILITY_CONFIG = {
+  minimumViewTime: 300,
+  viewAreaCoveragePercentThreshold: 100,
+  waitForInteraction: true,
+};
