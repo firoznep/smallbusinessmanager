@@ -30,8 +30,10 @@ export const styles = StyleSheet.create({
   childItem: {
     marginVertical: 2,
     borderLeftWidth: 1,
-    borderLeftColor: colors.fbBlue,
+    // borderBottomWidth: 1,
+    borderColor: colors.fbBlue,
     paddingLeft: 5,
+    alignSelf: 'flex-start',
   },
 
   dateInItems: {
@@ -84,8 +86,8 @@ export const styles = StyleSheet.create({
     right: 45,
     bottom: 55,
     borderRadius: 50,
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     backgroundColor: 'yellow',
     borderWidth: 0,
     elevation: 10,

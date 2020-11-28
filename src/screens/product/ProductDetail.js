@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {Alert, FlatList, Modal, RefreshControl, Text, View} from 'react-native';
+import {Modal, RefreshControl, Text, View} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -16,7 +16,7 @@ import RenderItem from '../../components/functionalComponents/RenderItem';
 import {styles} from '../../styles/styles';
 
 import {dltAllPro, handleDelete} from '../../util/handleDelete';
-import FlatItemSeparator from '../../components/functionalComponents/FlatItemSeparator';
+
 import {
   filterByDate,
   filterByName,
@@ -26,9 +26,9 @@ import {
 } from '../../storeRedux/actions/productActions';
 import BasicDropdownPicker from '../../components/basicComponents/BasicDropdownPicker';
 import RenderItemChild from '../../components/functionalComponents/RenderItemChild';
-import {VIEWABILITY_CONFIG} from '../../util/utilFunc';
 import {sortedUniqBy} from '../../util/sortedUniq';
 import BasicFlatList from '../../components/basicComponents/BasicFlatList';
+import {colors} from '../../colors/colors';
 
 // MAIN FUNC ===================================================
 const ProductDetail = ({navigation}) => {
@@ -58,13 +58,22 @@ const ProductDetail = ({navigation}) => {
   );
 
   // ------------------
-  const filterProductByName = filterAllProduct.filter(
-    (item) => item.name === filteredName,
-  );
 
-  const filterProductByDate = filterAllProduct.filter(
-    (item) => new Date(item.date).toDateString('en-US') === filteredDate,
-  );
+  const filteredBy = (arr, by) => {
+    return arr.filter((item) => {
+      switch (by) {
+        case 'date':
+          return new Date(item.date).toDateString('en-US') === filteredDate;
+        case 'name':
+          return item.name === filteredName;
+        case 'nameNDate':
+          return (
+            new Date(item.date).toDateString('en-US') === filteredDate &&
+            item.name === filteredName
+          );
+      }
+    });
+  };
 
   const dispatch = useDispatch();
 
@@ -93,19 +102,25 @@ const ProductDetail = ({navigation}) => {
         break;
 
       case 'name':
-        setData(filterProductByName);
+        setData(filteredBy(filterAllProduct, 'name'));
         setFilterBy('name');
         flt();
         break;
 
       case 'date':
-        setData(filterProductByDate);
+        setData(filteredBy(filterAllProduct, 'date'));
         setFilterBy('date');
         flt();
         break;
 
+      case 'nameNDate':
+        setData(filteredBy(filterAllProduct, 'nameNDate'));
+        setFilterBy('nameNDate');
+        flt();
+        break;
+
       default:
-        setData(filterProductByDate);
+        setData(filteredBy(filterAllProduct, 'date'));
         setFilterBy('date');
         flt();
     }
@@ -129,6 +144,8 @@ const ProductDetail = ({navigation}) => {
         return filteredName;
       case 'date':
         return filteredDate;
+      case 'nameNDate':
+        return `${filteredName} on ${filteredDate}`;
       case 'all':
         return '';
     }
@@ -156,27 +173,47 @@ const ProductDetail = ({navigation}) => {
         transparent={true}>
         <View style={styles.modalView}>
           <View
-            style={{width: '80%', height: '80%', backgroundColor: 'yellow'}}>
+            style={{
+              width: '95%',
+              height: '50%',
+              backgroundColor: colors.backGColor,
+              padding: 5,
+              elevation: 10,
+            }}>
             <BasicButton
-              title="Close"
+              style={styles.roundBtn}
+              // title="Close"
+              iconName="check-circle"
               onPress={() => {
                 setProductFilterFunc();
                 dispatch(productFilterScreenVisibleAction(false));
               }}
             />
 
-            <View style={{margin: 10}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+              }}>
               <BasicDropdownPicker
+                title="Filter By"
                 selectedValue={filterBy}
+                backgroundColor={colors.fbBlue}
+                fontColor={colors.yellow}
+                minWidth={filterBy === 'nameNDate' ? 190 : 130}
                 onValueChange={(itemValue) => setFilterBy(itemValue)}>
                 <Picker.Item label="Filter By" value="" color="gray" />
                 <Picker.Item label="Name" value="name" />
                 <Picker.Item label="Date" value="date" />
+                <Picker.Item label="Name and Date" value="nameNDate" />
                 <Picker.Item label="Show All" value="all" />
               </BasicDropdownPicker>
 
-              {filterBy === 'name' ? (
+              {filterBy === 'name' || filterBy === 'nameNDate' ? (
                 <BasicDropdownPicker
+                  title="Name"
+                  minWidth={190}
                   selectedValue={filteredName}
                   onValueChange={(itemValue) =>
                     dispatch(filterByName(itemValue))
@@ -188,8 +225,10 @@ const ProductDetail = ({navigation}) => {
                 </BasicDropdownPicker>
               ) : null}
 
-              {filterBy === 'date' ? (
+              {filterBy === 'date' || filterBy === 'nameNDate' ? (
                 <BasicDropdownPicker
+                  title="Date"
+                  minWidth={190}
                   selectedValue={filteredDate}
                   onValueChange={(itemValue) =>
                     dispatch(filterByDate(itemValue))
