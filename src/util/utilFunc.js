@@ -27,3 +27,14 @@ export const VIEWABILITY_CONFIG = {
   viewAreaCoveragePercentThreshold: 100,
   waitForInteraction: true,
 };
+
+export const randomId = () => {
+  let text = '';
+  let possible =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (let i = 0; i < 12; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+};

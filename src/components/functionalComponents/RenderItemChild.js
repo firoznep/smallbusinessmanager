@@ -9,6 +9,7 @@ const RenderItemChild = ({
   title,
   itemUnit,
   itemFieldSize,
+  fieldWidth,
 }) => {
   return itemField ? (
     <View style={styles.childItem}>
@@ -21,13 +22,15 @@ const RenderItemChild = ({
         }}>
         <Text
           style={{
-            color: fieldColor,
             fontWeight: 'bold',
             fontSize: itemFieldSize,
+            textTransform: 'capitalize',
+            color: fieldColor,
+            width: fieldWidth,
           }}>
           {itemField}
         </Text>
-        <Text>{itemUnit}</Text>
+        <Text style={{color: 'black'}}>{itemUnit}</Text>
       </View>
     </View>
   ) : null;

@@ -4,6 +4,7 @@ import {
   FILTER_ALL,
   FILTER_BY_DATE,
   FILTER_BY_NAME,
+  FILTER_BY_VENDOR,
   IS_FLATLIST_REFRESHED,
   PRODUCT_FILTER_SCREEN_VISIBLE,
   UPDATE_PRO_BY_ID,
@@ -13,6 +14,7 @@ const INITIAL_STATE = {
   allProducts: Products,
   filter: {
     byName: '',
+    byVendor: '',
     byDate: new Date().toDateString(),
   },
   updateItemById: {},
@@ -27,6 +29,9 @@ const ProductReducer = (state = INITIAL_STATE, action) => {
 
     case FILTER_BY_NAME:
       return {...state, filter: {...state.filter, byName: action.payload}};
+
+    case FILTER_BY_VENDOR:
+      return {...state, filter: {...state.filter, byVendor: action.payload}};
 
     case FILTER_BY_DATE:
       return {...state, filter: {...state.filter, byDate: action.payload}};

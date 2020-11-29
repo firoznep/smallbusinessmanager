@@ -2,6 +2,7 @@ import {
   FILTER_ALL,
   FILTER_BY_DATE,
   FILTER_BY_NAME,
+  FILTER_BY_VENDOR,
   IS_FLATLIST_REFRESHED,
   PRODUCT_FILTER_SCREEN_VISIBLE,
   UPDATE_PRO_BY_ID,
@@ -14,6 +15,11 @@ export const updateProAction = (payload) => ({
 
 export const filterByName = (payload) => ({
   type: FILTER_BY_NAME,
+  payload,
+});
+
+export const filterByVendor = (payload) => ({
+  type: FILTER_BY_VENDOR,
   payload,
 });
 

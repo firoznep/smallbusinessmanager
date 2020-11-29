@@ -33,13 +33,7 @@ export const styles = StyleSheet.create({
     // borderBottomWidth: 1,
     borderColor: colors.fbBlue,
     paddingLeft: 5,
-    alignSelf: 'flex-start',
-  },
-
-  dateInItems: {
-    // textAlign: 'right',
-    // width: '100%',
-    color: colors.fbBlue,
+    // alignSelf: 'flex-start',
   },
 
   flatItemSeparator: {
@@ -64,14 +58,16 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: colors.white,
-    padding: 10,
-    marginVertical: 8,
+    padding: 5,
+    marginVertical: 5,
   },
 
   itemMainChild: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    // backgroundColor: 'yellow',
   },
 
   modalView: {
@@ -100,7 +96,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.phGray,
   },
 
-  subChildItem: {color: colors.phGray},
+  subChildItem: {color: colors.phGray, fontSize: 12},
 
   title: {
     fontSize: 20,

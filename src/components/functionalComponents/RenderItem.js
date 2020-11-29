@@ -11,6 +11,7 @@ import {formatToCurrencyInd} from '../../util/utilFunc';
 import BasicImage from '../basicComponents/BasicImage';
 import RightAction from './RightAction';
 import RenderItemChild from './RenderItemChild';
+import {color} from 'react-native-reanimated';
 
 // MAIN FUNC
 const RenderItem = ({handleDelete, handleUpdate, item}) => {
@@ -27,8 +28,11 @@ const RenderItem = ({handleDelete, handleUpdate, item}) => {
       )}>
       <View style={styles.item}>
         <View style={styles.itemMainChild}>
-          <View style={{justifyContent: 'space-between'}}>
-            <Text style={styles.dateInItems}>
+          <View
+            style={{
+              justifyContent: 'space-between',
+            }}>
+            <Text style={{color: colors.fbBlue}}>
               {new Date(item.date).toDateString()}
             </Text>
 
@@ -36,6 +40,7 @@ const RenderItem = ({handleDelete, handleUpdate, item}) => {
               itemField={item.vendor}
               title="Vendor"
               fieldColor={colors.fbBlue}
+              fieldWidth={180}
             />
 
             <RenderItemChild
@@ -66,9 +71,17 @@ const RenderItem = ({handleDelete, handleUpdate, item}) => {
               <BasicImage
                 source={{uri: `data:${'image/jpeg'};base64,${item.img_data}`}}
               />
-              <Text style={{color: colors.fbBlue, fontWeight: 'bold'}}>
-                {item.name}
-              </Text>
+
+              <View>
+                <Text
+                  style={{
+                    color: colors.fbBlue,
+                    fontWeight: 'bold',
+                    width: 100,
+                  }}>
+                  {item.name}
+                </Text>
+              </View>
             </View>
           ) : null}
         </View>
