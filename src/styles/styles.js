@@ -77,6 +77,20 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  modalViewChild: {
+    width: '95%',
+    height: '50%',
+    backgroundColor: colors.backGColor,
+    padding: 5,
+    elevation: 10,
+  },
+
+  modalViewSubChild: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+  },
+
   roundBtn: {
     position: 'absolute',
     right: 45,

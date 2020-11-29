@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const formatToCurrencyDollar = (amount) => {
   return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 };
@@ -37,4 +39,9 @@ export const randomId = () => {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
 
   return text;
+};
+
+export const getTotal = (data, num) => {
+  let arr = data.map((itm) => Number(itm[num]));
+  return _.sum(arr);
 };

@@ -27,7 +27,7 @@ const UpdateProduct = () => {
         }}
         onSubmit={(values) => {
           let item1 = Products.get({id: updItem.id});
-          Products.update(item1.id, values);
+          Products.update(item1.id, values, (save = true));
 
           alert('updated');
         }}
