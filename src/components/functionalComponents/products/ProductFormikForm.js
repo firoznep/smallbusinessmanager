@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {ScrollView, Text, TextInput} from 'react-native';
 
@@ -9,6 +9,8 @@ import BasicInput from '../../basicComponents/BasicInput';
 import ModalDateTimePicker from '../../basicComponents/ModalDateTimePicker';
 import ErrorMsg from '../ErrorMsg';
 import GetImage from '../GetImage';
+import RenderItemChild from '../RenderItemChild';
+import {getTotalAmt} from '../../../util/utilFunc';
 
 const ProductFormikForm = () => {
   const {
@@ -20,6 +22,14 @@ const ProductFormikForm = () => {
     touched,
     errors,
   } = useFormikContext();
+
+  useEffect(() => {
+    setFieldValue('real_cost', getTotalAmt(values.cost_price, values.expenses));
+    setFieldValue(
+      'total_amount',
+      getTotalAmt(values.cost_price, values.expenses, values.quantity),
+    );
+  }, [values.cost_price, values.expenses, values.quantity]);
 
   return (
     <ScrollView keyboardShouldPersistTaps="handled">
@@ -92,31 +102,44 @@ const ProductFormikForm = () => {
       />
       <ErrorMsg errField={errors.quantity} touchedField={touched.quantity} />
 
-      {/* REAL COST */}
+      {/* COST PRICE */}
       <BasicInput
-        label="Real Cost *"
-        onChangeText={(n) =>
-          setFieldValue('real_cost', Math.floor(n).toString())
-        }
-        onBlur={handleBlur('real_cost')}
+        label="Primary cost on per unit *"
+        onChangeText={handleChange('cost_price')}
+        onBlur={handleBlur('cost_price')}
         keyboardType="numeric"
-        value={values.real_cost}
+        value={values.cost_price}
       />
-      <ErrorMsg errField={errors.real_cost} touchedField={touched.real_cost} />
+      <ErrorMsg
+        errField={errors.cost_price}
+        touchedField={touched.cost_price}
+      />
+
+      {/* EXPENSES */}
+      <BasicInput
+        label="Expenses On per unit (vat,transport...)"
+        onChangeText={handleChange('expenses')}
+        onBlur={handleBlur('expenses')}
+        keyboardType="numeric"
+        value={values.expenses}
+      />
+
+      <RenderItemChild title="Real Cost" itemField={values.real_cost} />
+      <RenderItemChild title="Total Amount" itemField={values.total_amount} />
 
       {/* DESCRIPTION */}
-      <Text>Description</Text>
+      <RenderItemChild>Description</RenderItemChild>
       <TextInput
         placeholder="Description"
-        onChangeText={(d) => setFieldValue('description', d)}
+        onChangeText={handleChange('description')}
         autoCapitalize="none"
         multiline={true}
         numberOfLines={3}
         textAlignVertical="top"
-        onBlur={handleBlur('description')}
+        // onBlur={handleBlur('description')}
         value={values.description}
         keyboardType="twitter"
-        blurOnSubmit={true}
+        // blurOnSubmit={true}
         selectTextOnFocus={true}
         style={{
           backgroundColor: 'white',

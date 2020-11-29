@@ -13,7 +13,7 @@ const RenderItemChild = ({
 }) => {
   return itemField ? (
     <View style={styles.childItem}>
-      <Text style={styles.subChildItem}>{title}</Text>
+      {title && <Text style={styles.subChildItem}>{title}</Text>}
       <View
         style={{
           flexDirection: 'row',
@@ -30,7 +30,7 @@ const RenderItemChild = ({
           }}>
           {itemField}
         </Text>
-        <Text style={{color: 'black'}}>{itemUnit}</Text>
+        <Text style={{color: 'black', fontSize: 10}}>{itemUnit}</Text>
       </View>
     </View>
   ) : null;

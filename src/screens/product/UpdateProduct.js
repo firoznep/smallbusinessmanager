@@ -22,12 +22,14 @@ const UpdateProduct = () => {
           color: updItem.color,
           unit: updItem.unit,
           quantity: updItem.quantity.toString(),
+          cost_price: updItem.cost_price.toString(),
+          expenses: updItem.expenses.toString(),
           real_cost: updItem.real_cost.toString(),
           description: updItem.description,
         }}
         onSubmit={(values) => {
           let item1 = Products.get({id: updItem.id});
-          Products.update(item1.id, values, (save = true));
+          Products.update(item1.id, values);
 
           alert('updated');
         }}

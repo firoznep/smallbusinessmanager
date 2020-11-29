@@ -45,3 +45,8 @@ export const getTotal = (data, num) => {
   let arr = data.map((itm) => Number(itm[num]));
   return _.sum(arr);
 };
+
+export const getTotalAmt = (cost, exp, qnt = 1) => {
+  let res = (Number(cost) + Number(exp)) * Number(qnt);
+  return res;
+};

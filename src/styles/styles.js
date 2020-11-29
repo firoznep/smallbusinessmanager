@@ -67,7 +67,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // backgroundColor: 'yellow',
   },
 
   modalView: {
@@ -110,7 +109,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.phGray,
   },
 
-  subChildItem: {color: colors.phGray, fontSize: 12},
+  subChildItem: {color: colors.phGray, fontSize: 10},
 
   title: {
     fontSize: 20,

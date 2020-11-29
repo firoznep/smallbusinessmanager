@@ -11,7 +11,6 @@ import {formatToCurrencyInd} from '../../util/utilFunc';
 import BasicImage from '../basicComponents/BasicImage';
 import RightAction from './RightAction';
 import RenderItemChild from './RenderItemChild';
-import {color} from 'react-native-reanimated';
 
 // MAIN FUNC
 const RenderItem = ({handleDelete, handleUpdate, item}) => {
@@ -48,22 +47,18 @@ const RenderItem = ({handleDelete, handleUpdate, item}) => {
               title="Quantity"
               fieldColor={colors.fbBlue}
               itemUnit={item.unit}
-              itemFieldSize={18}
             />
 
-            {item.real_cost ? (
-              <View style={styles.childItem}>
-                <Text style={styles.subChildItem}>Real Cost</Text>
-                <Text
-                  style={{
-                    color: colors.fbBlue,
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                  }}>
-                  {formatToCurrencyInd(item.real_cost)}
-                </Text>
-              </View>
-            ) : null}
+            <RenderItemChild
+              itemField={formatToCurrencyInd(item.real_cost)}
+              title="Real Cost"
+              fieldColor={colors.fbBlue}
+            />
+            <RenderItemChild
+              itemField={formatToCurrencyInd(item.total_amount)}
+              title="Total amount"
+              fieldColor={colors.fbBlue}
+            />
           </View>
 
           {item.name ? (
@@ -72,20 +67,19 @@ const RenderItem = ({handleDelete, handleUpdate, item}) => {
                 source={{uri: `data:${'image/jpeg'};base64,${item.img_data}`}}
               />
 
-              <View>
-                <Text
-                  style={{
-                    color: colors.fbBlue,
-                    fontWeight: 'bold',
-                    width: 100,
-                  }}>
-                  {item.name}
-                </Text>
-              </View>
+              <RenderItemChild itemField={item.name} fieldWidth={120} />
             </View>
           ) : null}
         </View>
 
+        <RenderItemChild
+          itemField={formatToCurrencyInd(item.cost_price)}
+          title="Primary Cost"
+        />
+        <RenderItemChild
+          itemField={formatToCurrencyInd(item.expenses)}
+          title="Expenses On Cost"
+        />
         <RenderItemChild itemField={item.color} title="Color" />
         <RenderItemChild itemField={item.model} title="Modal" />
         <RenderItemChild itemField={item.size} title="Size" />

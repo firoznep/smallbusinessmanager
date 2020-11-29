@@ -1,28 +1,13 @@
 import React from 'react';
 
-import {
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  View,
-} from 'react-native';
-
-import {ErrorMessage, Formik} from 'formik';
+import {Formik} from 'formik';
 
 import {Products} from '../../database';
 
 import _ from 'lodash';
 
-import BasicButton from '../../components/basicComponents/BasicButton';
 import SafeScreen from '../../components/basicComponents/SafeScreen';
-import ModalDateTimePicker from '../../components/basicComponents/ModalDateTimePicker';
-import BasicInput from '../../components/basicComponents/BasicInput';
-
-import {formatToCurrencyInd, getTotalWithPercent} from '../../util/utilFunc';
 import {yupValidationSchema} from '../../util/yupValidationSchema';
-import {styles} from '../../styles/styles';
-import ErrorMsg from '../../components/functionalComponents/ErrorMsg';
 import ProductFormikForm from '../../components/functionalComponents/products/ProductFormikForm';
 
 // MAIN FUNC --------------------------------------------------------
@@ -40,7 +25,10 @@ const AddProduct = () => {
           color: '',
           unit: '',
           quantity: '',
+          cost_price: '',
+          expenses: '',
           real_cost: '',
+          total_amount: '',
           description: '',
         }}
         onSubmit={(values) => {

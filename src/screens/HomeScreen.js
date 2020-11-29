@@ -6,7 +6,6 @@ import _ from 'lodash';
 
 import SafeScreen from '../components/basicComponents/SafeScreen';
 import {styles} from '../styles/styles';
-import {filterByName} from '../storeRedux/actions/productActions';
 
 const HomeScreen = ({navigation}) => {
   const allProductData = useSelector((state) => ({
@@ -16,18 +15,12 @@ const HomeScreen = ({navigation}) => {
 
   const dispatch = useDispatch();
 
-  // const dd = useCallback((name) => dispatch(filterByName(name)));
-
-  // dd('muslim');
-
   return (
     <SafeScreen>
       <ScrollView
         style={{
           flex: 1,
-          // justifyContent: 'center',
           backgroundColor: 'white',
-          // alignItems: 'center',
         }}>
         <View
           style={{

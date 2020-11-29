@@ -8,7 +8,7 @@ const BasicImage = ({source}) => {
       <Image
         source={source}
         style={{
-          width: 120,
+          width: 130,
           height: 135,
           borderRadius: 10,
           backgroundColor: colors.fbBlue,

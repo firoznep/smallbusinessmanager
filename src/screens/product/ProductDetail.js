@@ -31,8 +31,9 @@ const ProductDetail = ({navigation}) => {
   // STATES
   const [data, setData] = useState([]);
   const [filterBy, setFilterBy] = useState('date');
-  const [totalCost, setTotalCost] = useState('');
   const [totalQnt, setTotalQnt] = useState('');
+  const [totalRealCost, setTotalRealCost] = useState('');
+  const [totalAmount, setTotalAmount] = useState('');
 
   // REDUX SELECTORS
   const isFlatListRefreshed = useSelector(
@@ -58,6 +59,29 @@ const ProductDetail = ({navigation}) => {
   const filteredDate = useSelector(
     (state) => state.productReducer.filter.byDate,
   );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    Products.onChange(() => {
+      setProductFilterFunc();
+    });
+    const unSubscribe = setProductFilterFunc();
+    return unSubscribe;
+  }, [isFlatListRefreshed]);
+
+  useEffect(() => {
+    setTotalQnt(getTotal(data, 'quantity'));
+    setTotalRealCost(getTotal(data, 'real_cost'));
+    setTotalAmount(getTotal(data, 'total_amount'));
+  }, [data]);
+
+  const onRefresh = useCallback(() => {
+    dispatch(isFlatListRefreshedAction(true));
+    setFilterBy('all');
+    setData(filterAllProduct);
+    dispatch(isFlatListRefreshedAction(false));
+  });
 
   // ------------------
   const filteredBy = (arr, by) => {
@@ -91,96 +115,44 @@ const ProductDetail = ({navigation}) => {
     });
   };
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    Products.onChange(() => {
-      setProductFilterFunc();
-    });
-    const unSubscribe = setProductFilterFunc();
-    return unSubscribe;
-  }, [isFlatListRefreshed]);
-
-  useEffect(() => {
-    setTotalQnt(getTotal(data, 'quantity'));
-    setTotalCost(getTotal(data, 'real_cost'));
-  }, [data]);
-
-  const onRefresh = useCallback(() => {
-    dispatch(isFlatListRefreshedAction(true));
-    setFilterBy('all');
-    setData(filterAllProduct);
-    dispatch(isFlatListRefreshedAction(false));
-  });
-
   const setProductFilterFunc = () => {
     switch (filterBy) {
       case 'all':
         setData(filterAllProduct);
-        // setFilterBy('all');
-        // flt();
         break;
 
       case 'name':
         setData(filteredBy(filterAllProduct, 'name'));
-        // setFilterBy('name');
-        // flt();
         break;
 
       case 'vendor':
         setData(filteredBy(filterAllProduct, 'vendor'));
-        // setFilterBy('vendor');
-        // flt();
         break;
 
       case 'date':
         setData(filteredBy(filterAllProduct, 'date'));
-        // setFilterBy('date');
-        // flt();
         break;
 
       case 'productVendor':
         setData(filteredBy(filterAllProduct, 'productVendor'));
-        // setFilterBy('productVendor');
-        // flt();
         break;
 
       case 'nameNDate':
         setData(filteredBy(filterAllProduct, 'nameNDate'));
-        // setFilterBy('nameNDate');
-        // flt();
         break;
 
       case 'vendorNDate':
         setData(filteredBy(filterAllProduct, 'vendorNDate'));
-        // setFilterBy('vendorNDate');
-        // flt();
         break;
 
       case 'vendorProductDate':
         setData(filteredBy(filterAllProduct, 'vendorProductDate'));
-        // setFilterBy('vendorProductDate');
-        // flt();
         break;
 
       default:
         setData(filteredBy(filterAllProduct, 'date'));
-      // setFilterBy('date');
-      // flt();
     }
   };
-
-  const renderItem = ({item}) => (
-    <RenderItem
-      item={item}
-      handleDelete={() => handleDelete(Products, item)}
-      handleUpdate={() => {
-        let item1 = Products.get({id: item.id});
-        dispatch(updateProAction(item1));
-        navigation.navigate('UpdateProduct');
-      }}
-    />
-  );
 
   let flt = () => {
     switch (filterBy) {
@@ -203,6 +175,18 @@ const ProductDetail = ({navigation}) => {
     }
   };
 
+  const renderItem = ({item}) => (
+    <RenderItem
+      item={item}
+      handleDelete={() => handleDelete(Products, item)}
+      handleUpdate={() => {
+        let item1 = Products.get({id: item.id});
+        dispatch(updateProAction(item1));
+        navigation.navigate('UpdateProduct');
+      }}
+    />
+  );
+
   return (
     <SafeScreen>
       <View>
@@ -217,8 +201,12 @@ const ProductDetail = ({navigation}) => {
               }}>
               <RenderItemChild itemField={totalQnt} title="Total Quantity" />
               <RenderItemChild
-                itemField={formatToCurrencyInd(totalCost)}
-                title="Total Cost Price"
+                itemField={formatToCurrencyInd(totalRealCost)}
+                title="Total Real Cost"
+              />
+              <RenderItemChild
+                itemField={formatToCurrencyInd(totalAmount)}
+                title="Total Amount"
               />
             </View>
           </View>
@@ -272,12 +260,13 @@ const ProductDetail = ({navigation}) => {
         }
       />
 
-      <BasicButton
+      {/* <BasicButton
         title="Delete All"
         onPress={() => {
-          randomId();
+          dltAllPro();
+          alert('All data deleted!');
         }}
-      />
+      /> */}
     </SafeScreen>
   );
 };

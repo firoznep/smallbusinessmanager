@@ -10,7 +10,10 @@ export const ProductModel = {
     color: '?string',
     unit: '?string',
     quantity: 'int',
+    cost_price: 'int',
+    expenses: 'int',
     real_cost: 'int',
+    total_amount: 'int',
     description: '?string',
   },
 };
