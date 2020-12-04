@@ -128,24 +128,10 @@ const ProductFormikForm = () => {
       <RenderItemChild title="Total Amount" itemField={values.total_amount} />
 
       {/* DESCRIPTION */}
-      <RenderItemChild>Description</RenderItemChild>
-      <TextInput
-        placeholder="Description"
+      <BasicInput
+        label="Description"
         onChangeText={handleChange('description')}
-        autoCapitalize="none"
-        multiline={true}
-        numberOfLines={3}
-        textAlignVertical="top"
-        // onBlur={handleBlur('description')}
         value={values.description}
-        keyboardType="twitter"
-        // blurOnSubmit={true}
-        selectTextOnFocus={true}
-        style={{
-          backgroundColor: 'white',
-          borderWidth: 2,
-          marginBottom: 10,
-        }}
       />
 
       <BasicButton onPress={handleSubmit} title="Submit" iconName="check" />

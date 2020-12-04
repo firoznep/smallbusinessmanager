@@ -6,6 +6,7 @@ export const formatToCurrencyDollar = (amount) => {
 
 export const formatToCurrencyInd = (x) => {
   // let x=12345678;
+  if (x <= 0) return '₹' + '0.0';
 
   x = x.toString();
 
@@ -15,7 +16,6 @@ export const formatToCurrencyInd = (x) => {
   if (otherNumbers != '') lastThree = ',' + lastThree;
   let res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + lastThree;
 
-  if (res <= 0) return '₹' + '0.0';
   return '₹' + res;
 };
 

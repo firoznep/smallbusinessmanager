@@ -52,12 +52,13 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
 
-  item: {
+  listItem: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: colors.white,
+    height: 300,
     padding: 5,
     marginVertical: 5,
   },
@@ -78,9 +79,10 @@ export const styles = StyleSheet.create({
 
   modalViewChild: {
     width: '95%',
-    height: '50%',
+    height: '60%',
     backgroundColor: colors.backGColor,
     padding: 5,
+    borderRadius: 10,
     elevation: 10,
   },
 

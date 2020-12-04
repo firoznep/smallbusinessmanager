@@ -19,7 +19,7 @@ import BasicDropdownPicker from '../../basicComponents/BasicDropdownPicker';
 const ModalItem = ({
   setFilterBy,
   filterBy,
-  filterAllProduct,
+  data,
   filteredDate,
   filteredName,
   filteredVendor,
@@ -55,7 +55,7 @@ const ModalItem = ({
           selectedValue={filteredVendor}
           onValueChange={(itemValue) => dispatch(filterByVendor(itemValue))}>
           <Picker.Item label="Select Vendor" value={null} color="gray" />
-          {sortedUniqBy(filterAllProduct, 'vendor').map((elm) => {
+          {sortedUniqBy(data, 'vendor').map((elm) => {
             return <Picker.Item label={elm} value={elm} key={randomId()} />;
           })}
         </BasicDropdownPicker>
@@ -71,7 +71,7 @@ const ModalItem = ({
           selectedValue={filteredName}
           onValueChange={(itemValue) => dispatch(filterByName(itemValue))}>
           <Picker.Item label="Select Name" value={null} color="gray" />
-          {sortedUniqBy(filterAllProduct, 'name').map((elm) => {
+          {sortedUniqBy(data, 'name').map((elm) => {
             return <Picker.Item label={elm} value={elm} key={randomId()} />;
           })}
         </BasicDropdownPicker>
@@ -87,7 +87,7 @@ const ModalItem = ({
           selectedValue={filteredDate}
           onValueChange={(itemValue) => dispatch(filterByDate(itemValue))}>
           <Picker.Item label="Select Date" value={null} color="gray" />
-          {sortedUniqBy(filterAllProduct, 'date').map((elm) => {
+          {sortedUniqBy(data, 'date').map((elm) => {
             return <Picker.Item label={elm} value={elm} key={randomId()} />;
           })}
         </BasicDropdownPicker>

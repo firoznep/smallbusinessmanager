@@ -4,17 +4,15 @@ import {colors} from '../../colors/colors';
 
 const BasicImage = ({source}) => {
   return (
-    <View>
-      <Image
-        source={source}
-        style={{
-          width: 130,
-          height: 135,
-          borderRadius: 10,
-          backgroundColor: colors.fbBlue,
-        }}
-      />
-    </View>
+    <Image
+      source={source}
+      style={{
+        width: 130,
+        height: 135,
+        borderRadius: 10,
+        backgroundColor: colors.phGray,
+      }}
+    />
   );
 };
 
